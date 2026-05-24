@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Dev Sakarsawala Portfolio"
+version = "1.0.0"
+id = "client"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21113
+
+[services.development]
+run = "npm run dev -w @workspace/client"
+
+[services.production]
+build = [ "npm", "run", "build", "-w", "@workspace/client" ]
+publicDir = "client/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+CLIENT_PORT = "21113"
+BASE_PATH = "/"
