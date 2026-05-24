@@ -1,0 +1,16 @@
+[Unit]
+Description=Portfolio (API + frontend)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/portfolio-dev
+Environment=NODE_ENV=production
+EnvironmentFile=/home/ubuntu/portfolio-dev/.env
+ExecStart=/usr/bin/node --enable-source-maps /home/ubuntu/portfolio-dev/server/dist/index.mjs
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

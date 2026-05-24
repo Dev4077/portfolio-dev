@@ -1,21 +1,14 @@
 import { Router, type IRouter } from "express";
 import multer from "multer";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 import { About } from "@workspace/db";
 import { requireAuth } from "../middlewares/auth";
+import { getClientPublicDir } from "../lib/paths";
 
 const router: IRouter = Router();
 
-const publicDir = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "..",
-  "..",
-  "..",
-  "client",
-  "public",
-);
+const publicDir = getClientPublicDir();
 const uploadsDir = path.join(publicDir, "uploads");
 
 fs.mkdirSync(uploadsDir, { recursive: true });

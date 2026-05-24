@@ -1,8 +1,10 @@
 import express, { type Express } from "express";
 import cors from "cors";
+import path from "node:path";
 import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
+import { getClientPublicDir } from "./lib/paths";
 
 const app: Express = express();
 
@@ -30,5 +32,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
+
+if (process.env.NODE_ENV === "production") {
+  const staticDir = getClientPublicDir();
+
+  app.use(express.static(staticDir));
+
+  app.get(/^(?!\/api).*/, (_req, res, next) => {
+    if (res.headersSent) {
+      next();
+      return;
+    }
+    res.sendFile(path.join(staticDir, "index.html"), (err) => {
+      if (err) next(err);
+    });
+  });
+}
 
 export default app;
