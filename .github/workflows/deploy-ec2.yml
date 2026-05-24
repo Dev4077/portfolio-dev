@@ -1,0 +1,53 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend and backend
+        env:
+          NODE_ENV: production
+          BASE_PATH: /
+          SERVER_PORT: "8080"
+          CLIENT_PORT: "21113"
+        run: npm run build:deploy
+
+      - name: Deploy build artifacts to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "server/dist,client/dist/public,deploy/ecosystem.config.cjs"
+          target: "/home/ubuntu/portfolio-dev"
+          strip_components: 0
+
+      - name: Restart PM2 on EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/portfolio-dev
+            if ! command -v pm2 >/dev/null; then
+              sudo npm install -g pm2
+            fi
+            pm2 delete portfolio 2>/dev/null || true
+            pm2 start deploy/ecosystem.config.cjs
+            pm2 save
