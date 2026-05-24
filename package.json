@@ -12,6 +12,10 @@
   "scripts": {
     "build": "npm run typecheck && npm run build --workspaces --if-present",
     "build:deploy": "npm run build -w @workspace/client && npm run build -w @workspace/server",
+    "pm2:start": "pm2 start deploy/ecosystem.config.cjs",
+    "pm2:restart": "pm2 restart portfolio",
+    "pm2:stop": "pm2 stop portfolio",
+    "pm2:logs": "pm2 logs portfolio",
     "dev:client": "npm run dev -w @workspace/client",
     "dev:server": "npm run dev -w @workspace/server",
     "seed": "npm run seed -w @workspace/scripts",
