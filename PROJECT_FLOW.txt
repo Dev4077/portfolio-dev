@@ -1,0 +1,222 @@
+================================================================================
+PORTFOLIO BUILDER — PROJECT FLOW
+================================================================================
+
+Monorepo (npm workspaces): React frontend + Express API + MongoDB.
+In production, ONE Node process serves both the API and the built React app.
+
+
+--------------------------------------------------------------------------------
+1. REPOSITORY LAYOUT
+--------------------------------------------------------------------------------
+
+portfolio-dev/
+  client/                 React + Vite (public portfolio + /admin panel)
+  server/                 Express 5 API (esbuild bundle → server/dist/index.mjs)
+  lib/
+    db/                   Mongoose models + connectDb()
+    api-spec/             openapi.yaml (API contract) + Orval codegen config
+    api-zod/              Generated Zod schemas for server validation
+    api-client-react/     Generated React Query hooks for the client
+  scripts/                seed.ts (demo data)
+  deploy/                 PM2 + systemd helpers for production
+  .github/workflows/      CI: build + SCP to EC2 + PM2 restart
+
+Shared config: .env at repo root (see .env.example).
+
+
+--------------------------------------------------------------------------------
+2. HOW THE SERVER WORKS
+--------------------------------------------------------------------------------
+
+Entry: server/src/index.ts
+  1. load-env.ts loads root .env
+  2. connectDb() (lib/db) connects to MongoDB via DATABASE_URL
+  3. Express app listens on SERVER_PORT (default 8080)
+
+App: server/src/app.ts
+  - Middleware: pino HTTP logging, CORS, JSON body parser
+  - All API routes mounted at /api (server/src/routes/index.ts)
+  - Production only (NODE_ENV=production):
+      Serves static files from client/dist/public
+      SPA fallback: any non-/api path → index.html
+
+Routes (under /api):
+  health, auth/login, projects, skills, experience, about,
+  contact, education, stats, upload
+
+Auth:
+  - POST /api/auth/login → JWT token
+  - Protected routes use middleware in server/src/middlewares/auth.ts
+  - Client sends Authorization: Bearer <token> (see client/src/lib/auth.ts)
+
+Validation:
+  - Request bodies validated with Zod schemas from @workspace/api-zod
+  - Schemas are generated from lib/api-spec/openapi.yaml
+
+Build:
+  - npm run build -w @workspace/server  →  node server/build.mjs (esbuild)
+  - Output: server/dist/index.mjs (single bundled ESM file)
+
+Dev:
+  - npm run dev:server
+  - Rebuilds on each dev start, then runs dist/index.mjs
+  - Does NOT serve the Vite dev client; use dev:client separately
+
+
+--------------------------------------------------------------------------------
+3. HOW THE CLIENT WORKS
+--------------------------------------------------------------------------------
+
+Stack: React 19, Vite 7, Tailwind 4, wouter (routing), TanStack Query
+
+Entry: client/src/main.tsx
+  - Registers JWT getter for API client (setAuthTokenGetter)
+  - Renders App with dark theme
+
+Routing: client/src/App.tsx
+  /              Public portfolio (Hero, Projects, Skills, etc.)
+  /admin/login   Admin login
+  /admin/*       Protected admin CRUD (projects, skills, experience, …)
+
+API calls:
+  - Generated hooks in lib/api-client-react (from OpenAPI via Orval)
+  - Base URL: /api (vite dev proxy → server; production same origin)
+  - custom-fetch.ts adds Bearer token for admin requests
+
+Build:
+  - npm run build -w @workspace/client
+  - Output: client/dist/public/ (index.html + assets)
+  - BASE_PATH from .env sets Vite base (usually /)
+
+Dev:
+  - npm run dev:client
+  - Vite on CLIENT_PORT (default 21113)
+  - Proxies /api → http://127.0.0.1:SERVER_PORT
+  - Start server FIRST, then client
+
+Codegen (after changing openapi.yaml):
+  - npm run codegen
+  - Regenerates lib/api-client-react and lib/api-zod
+
+
+--------------------------------------------------------------------------------
+4. DATA FLOW (REQUEST PATH)
+--------------------------------------------------------------------------------
+
+Development (two processes):
+  Browser → Vite :21113 → /api/* proxied → Express :8080 → MongoDB
+
+Production (one process):
+  Browser → Express :8080
+    /api/*     → API handlers → MongoDB
+    /*         → static files from client/dist/public
+    (SPA)      → index.html for client-side routes like /admin
+
+
+--------------------------------------------------------------------------------
+5. ENVIRONMENT VARIABLES (.env)
+--------------------------------------------------------------------------------
+
+DATABASE_URL      MongoDB connection string (required)
+SESSION_SECRET    Used for JWT signing (change in production)
+SERVER_PORT       API + production HTTP port (8080)
+CLIENT_PORT       Vite dev server port (21113)
+BASE_PATH         URL base for Vite build (usually /)
+
+Copy: cp .env.example .env
+
+
+--------------------------------------------------------------------------------
+6. LOCAL COMMANDS
+--------------------------------------------------------------------------------
+
+Install (once):
+  npm ci
+
+Database seed (optional demo data):
+  npm run seed
+
+Development (two terminals):
+  npm run dev:server    # terminal 1 — API on 8080
+  npm run dev:client    # terminal 2 — UI on CLIENT_PORT
+
+Typecheck / full build:
+  npm run typecheck
+  npm run build
+
+Production build (what deploy uses):
+  npm run build:deploy
+  # Builds client → client/dist/public
+  # Builds server → server/dist/index.mjs
+
+Run production locally:
+  export NODE_ENV=production
+  npm run build:deploy
+  node --enable-source-maps server/dist/index.mjs
+  # Open http://localhost:8080
+
+PM2 (local or server):
+  npm run pm2:start      # uses deploy/ecosystem.config.cjs
+  npm run pm2:restart
+  npm run pm2:stop
+  npm run pm2:logs
+
+
+--------------------------------------------------------------------------------
+7. HOW DEPLOY WORKS (AWS EC2)
+--------------------------------------------------------------------------------
+
+Full guide: DEPLOY_EC2.txt
+
+Deploy scripts (deploy/):
+  ec2-setup.sh       One-time: Node 24, PM2, nginx, app dir
+  deploy.sh          Build locally + SCP + PM2 restart
+  env.ec2.example    Template for server .env
+  nginx-portfolio.conf   Proxy port 80 → 8080
+  ecosystem.config.cjs   PM2 config
+  setup-swap.sh      Swap for t2/t3.micro builds
+
+Quick manual deploy from laptop:
+  EC2_HOST=3.15.x.x SSH_KEY=~/.ssh/key.pem npm run deploy:ec2
+
+GitHub Actions: .github/workflows/deploy-ec2.yml
+  Secrets: EC2_HOST, EC2_USER, EC2_SSH_KEY
+  Push to main or workflow_dispatch
+
+Server must have: /home/ubuntu/portfolio-dev/.env (never committed)
+
+
+--------------------------------------------------------------------------------
+8. REMOVED / IGNORE FILES
+--------------------------------------------------------------------------------
+
+Removed (not needed for EC2/local workflow):
+  - Replit config (.replit, .replitignore, .replit-artifact/)
+  - replit.md (replaced by this file)
+  - portfolio-ec2-key.pem (SSH keys must live outside the repo)
+  - scripts/post-merge.sh (Replit-only hook)
+
+Still in repo but optional:
+  - Replit Vite plugins in client/ (only active when REPL_ID is set)
+  - deploy/portfolio.service if you prefer systemd over PM2
+
+
+--------------------------------------------------------------------------------
+9. QUICK TROUBLESHOOTING
+--------------------------------------------------------------------------------
+
+Client shows API errors in dev:
+  → Is dev:server running on SERVER_PORT?
+
+Empty admin / 401:
+  → Run npm run seed
+  → Login: dev@sakarsawala.dev / admin123 (from scripts/src/seed.ts)
+
+Production 404 on /admin:
+  → NODE_ENV must be production; client/dist/public must exist
+
+Deploy fails on small EC2 during build:
+  → Run deploy/setup-swap.sh then rebuild
+
+================================================================================

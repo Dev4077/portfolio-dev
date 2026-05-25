@@ -44,10 +44,17 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -euo pipefail
             cd /home/ubuntu/portfolio-dev
+            if [ ! -f .env ]; then
+              echo "ERROR: Create /home/ubuntu/portfolio-dev/.env on the server first."
+              echo "See deploy/env.ec2.example"
+              exit 1
+            fi
             if ! command -v pm2 >/dev/null; then
               sudo npm install -g pm2
             fi
             pm2 delete portfolio 2>/dev/null || true
             pm2 start deploy/ecosystem.config.cjs
             pm2 save
+            pm2 status

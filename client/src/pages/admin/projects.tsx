@@ -160,7 +160,6 @@ export default function AdminProjects() {
                   <FormField
                     control={form.control}
                     name="description"
-                    className="col-span-2"
                     render={({ field }) => (
                       <FormItem className="col-span-2">
                         <FormLabel>Short Description</FormLabel>
@@ -172,7 +171,6 @@ export default function AdminProjects() {
                   <FormField
                     control={form.control}
                     name="longDescription"
-                    className="col-span-2"
                     render={({ field }) => (
                       <FormItem className="col-span-2">
                         <FormLabel>Long Description (Optional)</FormLabel>
@@ -184,7 +182,6 @@ export default function AdminProjects() {
                   <FormField
                     control={form.control}
                     name="techStack"
-                    className="col-span-2"
                     render={({ field }) => (
                       <FormItem className="col-span-2">
                         <FormLabel>Tech Stack (comma separated)</FormLabel>

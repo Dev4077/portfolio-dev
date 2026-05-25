@@ -217,7 +217,6 @@ export default function AdminExperience() {
                   <FormField
                     control={form.control}
                     name="description"
-                    className="col-span-2"
                     render={({ field }) => (
                       <FormItem className="col-span-2">
                         <FormLabel>Description</FormLabel>
@@ -229,7 +228,6 @@ export default function AdminExperience() {
                   <FormField
                     control={form.control}
                     name="achievements"
-                    className="col-span-2"
                     render={({ field }) => (
                       <FormItem className="col-span-2">
                         <FormLabel>Achievements (One per line)</FormLabel>

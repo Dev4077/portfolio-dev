@@ -14,7 +14,7 @@ export function Skills() {
     }
     acc[skill.category].push(skill);
     return acc;
-  }, {} as Record<string, typeof skills>);
+  }, {} as Record<string, (typeof skills)[number][]>);
 
   return (
     <section id="skills" className="py-24 relative z-20 bg-secondary/20 border-y border-white/5">

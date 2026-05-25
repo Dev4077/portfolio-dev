@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { 
+import {
   useGetAbout,
   useUpdateAbout,
-  getGetAboutQueryKey 
+  getGetAboutQueryKey,
+  type AboutInput,
 } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -91,7 +92,13 @@ export default function AdminAbout() {
   };
 
   const onSubmit = (values: z.infer<typeof aboutSchema>) => {
-    toast.promise(updateAbout.mutateAsync({ data: values }), {
+    const data: AboutInput = {
+      ...values,
+      yearsOfExperience: values.yearsOfExperience ?? undefined,
+      projectsCompleted: values.projectsCompleted ?? undefined,
+      technologiesUsed: values.technologiesUsed ?? undefined,
+    };
+    toast.promise(updateAbout.mutateAsync({ data }), {
       loading: "Saving profile...",
       success: () => {
         queryClient.invalidateQueries({ queryKey: getGetAboutQueryKey() });

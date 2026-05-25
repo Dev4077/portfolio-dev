@@ -1,0 +1,181 @@
+================================================================================
+DEPLOY PORTFOLIO ON AWS EC2
+================================================================================
+
+Two ways to deploy:
+  A) GitHub Actions (automatic on push to main)
+  B) Manual from your laptop (deploy/deploy.sh)
+
+Both upload the same artifacts and run PM2 on the server.
+
+
+--------------------------------------------------------------------------------
+STEP 1 — LAUNCH EC2
+--------------------------------------------------------------------------------
+
+1. AWS Console → EC2 → Launch instance
+2. AMI: Ubuntu Server 24.04 LTS (or 22.04)
+3. Instance type: t3.small or larger (t2.micro works with swap; build is slow)
+4. Key pair: create/download .pem (store OUTSIDE this repo)
+5. Security group inbound rules:
+     SSH   TCP 22   Your IP (recommended) or 0.0.0.0/0
+     HTTP  TCP 80   0.0.0.0/0        (if using nginx)
+     Custom TCP 8080  0.0.0.0/0      (optional; direct to Node without nginx)
+6. Storage: 20 GB+ recommended
+7. Launch → note Public IPv4 (e.g. 3.15.x.x)
+
+
+--------------------------------------------------------------------------------
+STEP 2 — CONNECT & ONE-TIME SERVER SETUP
+--------------------------------------------------------------------------------
+
+On your Mac:
+
+  chmod 400 ~/.ssh/your-key.pem
+  ssh -i ~/.ssh/your-key.pem ubuntu@YOUR_EC2_IP
+
+On the server (first time):
+
+  # Option 1: clone repo and run setup script
+  git clone https://github.com/YOUR_USER/YOUR_REPO.git portfolio-dev
+  cd portfolio-dev
+  bash deploy/ec2-setup.sh
+
+  # Option 2: copy only setup script via scp, then run it
+
+Small instance (t2/t3.micro) — add swap before building on server:
+
+  bash deploy/setup-swap.sh
+
+
+--------------------------------------------------------------------------------
+STEP 3 — PRODUCTION .env ON EC2
+--------------------------------------------------------------------------------
+
+  cd ~/portfolio-dev
+  cp deploy/env.ec2.example .env
+  nano .env
+
+Set:
+  DATABASE_URL     MongoDB Atlas connection string (allow EC2 IP in Atlas Network Access)
+  SESSION_SECRET   Long random string (not "dev-secret")
+  SERVER_PORT=8080
+  BASE_PATH=/
+  NODE_ENV=production
+
+Seed database once (from server, if you cloned full repo):
+
+  npm ci
+  npm run seed
+
+
+--------------------------------------------------------------------------------
+STEP 4A — DEPLOY VIA GITHUB ACTIONS (recommended)
+--------------------------------------------------------------------------------
+
+In GitHub repo → Settings → Secrets and variables → Actions:
+
+  EC2_HOST      Public IP or DNS of instance (e.g. 3.15.x.x)
+  EC2_USER      ubuntu
+  EC2_SSH_KEY   Full private key file contents (.pem text)
+
+Push to main branch, or Actions → "Deploy to EC2" → Run workflow.
+
+Workflow builds in CI, copies to /home/ubuntu/portfolio-dev:
+  server/dist
+  client/dist/public
+  deploy/ecosystem.config.cjs
+
+Then restarts PM2 app "portfolio".
+
+
+--------------------------------------------------------------------------------
+STEP 4B — MANUAL DEPLOY FROM YOUR LAPTOP
+--------------------------------------------------------------------------------
+
+From project root on your Mac:
+
+  npm ci
+  EC2_HOST=YOUR_EC2_IP \
+  EC2_USER=ubuntu \
+  SSH_KEY=~/.ssh/your-key.pem \
+  bash deploy/deploy.sh
+
+Or npm script:
+
+  EC2_HOST=YOUR_EC2_IP SSH_KEY=~/.ssh/your-key.pem npm run deploy:ec2
+
+
+--------------------------------------------------------------------------------
+STEP 5 — NGINX (optional, serve on port 80)
+--------------------------------------------------------------------------------
+
+On EC2:
+
+  sudo cp ~/portfolio-dev/deploy/nginx-portfolio.conf /etc/nginx/sites-available/portfolio
+  sudo ln -sf /etc/nginx/sites-available/portfolio /etc/nginx/sites-enabled/
+  sudo rm -f /etc/nginx/sites-enabled/default
+  sudo nginx -t
+  sudo systemctl reload nginx
+
+Open: http://YOUR_EC2_IP/
+
+
+--------------------------------------------------------------------------------
+STEP 6 — VERIFY
+--------------------------------------------------------------------------------
+
+  pm2 status
+  pm2 logs portfolio
+  curl -s http://127.0.0.1:8080/api/health
+
+Browser:
+  http://YOUR_EC2_IP:8080     (direct)
+  http://YOUR_EC2_IP/         (with nginx)
+
+Admin: http://YOUR_EC2_IP/admin/login
+  (seed credentials: dev@sakarsawala.dev / admin123 if you ran npm run seed)
+
+
+--------------------------------------------------------------------------------
+UPDATES AFTER FIRST DEPLOY
+--------------------------------------------------------------------------------
+
+GitHub Actions: push to main → auto deploy
+
+Manual:
+
+  EC2_HOST=... SSH_KEY=... bash deploy/deploy.sh
+
+On-server build (if you git pull on EC2 instead of SCP):
+
+  cd ~/portfolio-dev && git pull
+  bash deploy/setup-swap.sh    # micro instances only
+  npm ci && npm run build:deploy
+  pm2 restart portfolio
+
+
+--------------------------------------------------------------------------------
+TROUBLESHOOTING
+--------------------------------------------------------------------------------
+
+502 / connection refused
+  → pm2 status — is "portfolio" online?
+  → pm2 logs portfolio — MongoDB / .env errors?
+  → Security group allows 8080 or 80
+
+MongoDB connection failed
+  → Atlas → Network Access → add EC2 public IP (or 0.0.0.0/0 for testing)
+
+Missing .env on deploy
+  → Create ~/portfolio-dev/.env on server (not deployed by CI for security)
+
+PM2 not surviving reboot
+  → pm2 startup (run sudo command it prints)
+  → pm2 save
+
+Build OOM on micro instance
+  → bash deploy/setup-swap.sh
+  → Prefer CI build (GitHub Actions) + deploy.sh upload only
+
+================================================================================
