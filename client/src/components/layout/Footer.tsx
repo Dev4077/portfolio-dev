@@ -1,7 +1,10 @@
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { Link } from "wouter";
+import { useGetAbout } from "@workspace/api-client-react";
 
 export function Footer() {
+  const { data: about } = useGetAbout();
+
   return (
     <footer className="border-t border-white/5 bg-background py-8">
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -10,16 +13,16 @@ export function Footer() {
         </div>
         
         <div className="flex items-center space-x-6">
-          <a href="https://github.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-github">
+          <a href={about?.githubUrl || "https://github.com"} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-github">
             <Github className="h-5 w-5" />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-linkedin">
+          <a href={about?.linkedinUrl || "https://linkedin.com"} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-linkedin">
             <Linkedin className="h-5 w-5" />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-twitter">
+          <a href={about?.twitterUrl || "https://twitter.com"} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-twitter">
             <Twitter className="h-5 w-5" />
           </a>
-          <a href="mailto:contact@example.com" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-email">
+          <a href={about?.email ? `mailto:${about.email}` : "mailto:contact@example.com"} className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-email">
             <Mail className="h-5 w-5" />
           </a>
         </div>
