@@ -54,7 +54,7 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
                 </p>
                 
                 <div className="flex flex-wrap gap-2 mt-auto">
-                  {project.techStack.map(tech => (
+                  {project.techStack.map((tech: string) => (
                     <span key={tech} className="font-mono text-[10px] text-muted-foreground bg-white/5 px-2 py-1 rounded">
                       {tech}
                     </span>
