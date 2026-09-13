@@ -1,34 +1,15 @@
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
-import { Link } from "wouter";
-import { useGetAbout } from "@workspace/api-client-react";
+import Link from "next/link";
 
 export function Footer() {
-  const { data: about } = useGetAbout();
-
   return (
-    <footer className="border-t border-white/5 bg-background py-8">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer className="border-t border-white/5 bg-background py-8 px-8 lg:px-16 xl:px-24">
+      <div className="max-w-4xl flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="text-muted-foreground font-mono text-sm">
           <span className="text-primary">&copy; {new Date().getFullYear()}</span> Dev Sakarsawala
         </div>
         
-        <div className="flex items-center space-x-6">
-          <a href={about?.githubUrl || "https://github.com"} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-github">
-            <Github className="h-5 w-5" />
-          </a>
-          <a href={about?.linkedinUrl || "https://linkedin.com"} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-linkedin">
-            <Linkedin className="h-5 w-5" />
-          </a>
-          <a href={about?.twitterUrl || "https://twitter.com"} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-twitter">
-            <Twitter className="h-5 w-5" />
-          </a>
-          <a href={about?.email ? `mailto:${about.email}` : "mailto:contact@example.com"} className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-email">
-            <Mail className="h-5 w-5" />
-          </a>
-        </div>
-
-        <div className="flex items-center gap-4 text-muted-foreground font-mono text-xs text-center md:text-right">
-          <span>Built with <span className="text-primary">React</span> + Node.js</span>
+        <div className="flex items-center gap-4 text-muted-foreground font-mono text-xs">
+          <span>Built with <span className="text-primary">React</span></span>
           <Link
             href="/admin"
             className="text-muted-foreground/40 hover:text-primary/70 transition-colors border border-white/5 hover:border-primary/20 px-2 py-1 rounded"

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const skillSchema = new Schema({
   name: { type: String, required: true },
@@ -8,4 +8,4 @@ const skillSchema = new Schema({
   order: { type: Number, default: 0 },
 });
 
-export const Skill = model("Skill", skillSchema);
+export const Skill = models.Skill || model("Skill", skillSchema);

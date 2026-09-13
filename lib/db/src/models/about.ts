@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const aboutSchema = new Schema({
   bio: { type: String, required: true },
@@ -16,4 +16,4 @@ const aboutSchema = new Schema({
   codingPhilosophy: { type: String },
 });
 
-export const About = model("About", aboutSchema);
+export const About = models.About || model("About", aboutSchema);

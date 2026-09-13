@@ -1,4 +1,4 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, models, Types } from "mongoose";
 
 const adminSchema = new Schema(
   {
@@ -17,4 +17,4 @@ export type AdminDocument = {
   createdAt: Date;
 };
 
-export const Admin = model("Admin", adminSchema);
+export const Admin = models.Admin || model("Admin", adminSchema);

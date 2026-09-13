@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const contactMessageSchema = new Schema(
   {
@@ -11,4 +11,4 @@ const contactMessageSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false } },
 );
 
-export const ContactMessage = model("ContactMessage", contactMessageSchema);
+export const ContactMessage = models.ContactMessage || model("ContactMessage", contactMessageSchema);

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const experienceSchema = new Schema(
   {
@@ -15,4 +15,4 @@ const experienceSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false } },
 );
 
-export const Experience = model("Experience", experienceSchema);
+export const Experience = models.Experience || model("Experience", experienceSchema);
