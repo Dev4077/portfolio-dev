@@ -51,7 +51,7 @@ export function Education({ educations = [] }: { educations?: any[] }) {
 
                 {edu.achievements && edu.achievements.length > 0 && (
                   <ul className="space-y-2 mt-4 pl-4 border-l border-white/10">
-                    {edu.achievements.map((item, aIdx) => (
+                    {edu.achievements.map((item: string, aIdx: number) => (
                       <li key={aIdx} className="text-muted-foreground text-sm leading-relaxed relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-[1px] before:bg-primary">
                         {item}
                       </li>

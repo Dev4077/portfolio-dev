@@ -35,7 +35,7 @@ export function Skills({ skills = [] }: { skills?: any[] }) {
           </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {Object.entries(groupedSkills).map(([category, categorySkills]) => (
+            {Object.entries(groupedSkills).map(([category, categorySkills]: [string, any[]]) => (
               <div 
                 key={category}
                 className="bg-card/40 border border-white/5 p-8 rounded-lg hover:border-primary/50 transition-colors duration-300"

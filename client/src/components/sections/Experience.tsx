@@ -49,7 +49,7 @@ export function Experience({ experiences = [] }: { experiences?: any[] }) {
 
                 {exp.achievements && exp.achievements.length > 0 && (
                   <ul className="space-y-2 mt-4 pl-4 border-l border-white/10">
-                    {exp.achievements.map((achievement, aIdx) => (
+                    {exp.achievements.map((achievement: string, aIdx: number) => (
                       <li key={aIdx} className="text-muted-foreground text-sm leading-relaxed relative before:content-[''] before:absolute before:-left-4 before:top-2 before:w-2 before:h-[1px] before:bg-primary">
                         {achievement}
                       </li>
