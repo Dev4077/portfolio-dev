@@ -16,4 +16,4 @@ const aboutSchema = new Schema({
   codingPhilosophy: { type: String },
 });
 
-export const About = models.About || model("About", aboutSchema);
+export const About = models.About as any || model("About", aboutSchema);
