@@ -17,4 +17,4 @@ const educationSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false } },
 );
 
-export const Education = models.Education || model("Education", educationSchema);
+export const Education = models.Education as any || model("Education", educationSchema);

@@ -16,4 +16,4 @@ const projectSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false } },
 );
 
-export const Project = models.Project || model("Project", projectSchema);
+export const Project = models.Project as any || model("Project", projectSchema);

@@ -34,7 +34,7 @@ export function Contact({ about }: { about?: any }) {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     try {
-      const result = await sendMessageAction(values);
+      const result = await sendMessageAction(values as any);
       if (result.success) {
         toast.success("Message sent successfully. I'll respond shortly.");
         form.reset();

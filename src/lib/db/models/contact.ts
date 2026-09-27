@@ -11,4 +11,4 @@ const contactMessageSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false } },
 );
 
-export const ContactMessage = models.ContactMessage || model("ContactMessage", contactMessageSchema);
+export const ContactMessage = models.ContactMessage as any || model("ContactMessage", contactMessageSchema);

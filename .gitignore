@@ -42,8 +42,6 @@ Thumbs.db
 .github/instructions/nx.instructions.md
 
 # Environment
-.env
-.env.local
 
 # Replit
 .cache/
@@ -57,3 +55,4 @@ temp_interactive_push.bat
 .gitignore
 .next
 client/.next
+config.bat
