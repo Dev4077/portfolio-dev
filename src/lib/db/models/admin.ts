@@ -17,4 +17,4 @@ export type AdminDocument = {
   createdAt: Date;
 };
 
-export const Admin = models.Admin || model("Admin", adminSchema);
+export const Admin = models.Admin as any || model("Admin", adminSchema);

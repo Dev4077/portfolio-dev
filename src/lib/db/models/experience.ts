@@ -15,4 +15,4 @@ const experienceSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false } },
 );
 
-export const Experience = models.Experience || model("Experience", experienceSchema);
+export const Experience = models.Experience as any || model("Experience", experienceSchema);

@@ -8,4 +8,4 @@ const skillSchema = new Schema({
   order: { type: Number, default: 0 },
 });
 
-export const Skill = models.Skill || model("Skill", skillSchema);
+export const Skill = models.Skill as any || model("Skill", skillSchema);
