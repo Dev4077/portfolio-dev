@@ -3,6 +3,7 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { Hero } from "@/components/sections/Hero";
 import { About as AboutSection } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
+import { SakugaStation } from "@/components/sections/SakugaStation";
 import { Projects } from "@/components/sections/Projects";
 import { Experience as ExperienceSection } from "@/components/sections/Experience";
 import { Education as EducationSection } from "@/components/sections/Education";
@@ -13,26 +14,36 @@ import { serializeDoc } from "@/lib/db";
 export const revalidate = 60; // Revalidate data every minute
 
 export default async function PortfolioPage() {
-  await connectDb();
-  
-  const [about, skills, projects, experiences, educations] = await Promise.all([
-    About.findOne(),
-    Skill.find().sort({ order: 1 }),
-    Project.find().sort({ order: 1 }),
-    Experience.find().sort({ startDate: -1 }),
-    Education.find().sort({ startDate: -1 }),
-  ]);
-  
-  const serializedAbout = about ? serializeDoc(about) : null;
-  const serializedSkills = skills.map(serializeDoc);
-  const serializedProjects = projects.map(serializeDoc);
-  const serializedExperiences = experiences.map(serializeDoc);
-  const serializedEducations = educations.map(serializeDoc);
+  let serializedAbout = null;
+  let serializedSkills: any[] = [];
+  let serializedProjects: any[] = [];
+  let serializedExperiences: any[] = [];
+  let serializedEducations: any[] = [];
+
+  try {
+    await connectDb();
+
+    const [about, skills, projects, experiences, educations] = await Promise.all([
+      About.findOne().catch(() => null),
+      Skill.find().sort({ order: 1 }).catch(() => []),
+      Project.find().sort({ order: 1 }).catch(() => []),
+      Experience.find().sort({ startDate: -1 }).catch(() => []),
+      Education.find().sort({ startDate: -1 }).catch(() => []),
+    ]);
+
+    serializedAbout = about ? serializeDoc(about) : null;
+    serializedSkills = Array.isArray(skills) ? skills.map(serializeDoc) : [];
+    serializedProjects = Array.isArray(projects) ? projects.map(serializeDoc) : [];
+    serializedExperiences = Array.isArray(experiences) ? experiences.map(serializeDoc) : [];
+    serializedEducations = Array.isArray(educations) ? educations.map(serializeDoc) : [];
+  } catch (error) {
+    console.warn("Database connection issue, using fallback data:", error);
+  }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#ffffff] text-[#1d1a4a]">
       {/* Top Navigation */}
-      <div className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b-2 border-[#1d1a4a]/10">
         <Sidebar about={serializedAbout} />
       </div>
 
@@ -41,11 +52,13 @@ export default async function PortfolioPage() {
         <Hero about={serializedAbout} skills={serializedSkills} />
         <AboutSection about={serializedAbout} />
         <Skills skills={serializedSkills} />
+        <SakugaStation />
         <Projects projects={serializedProjects} />
         <ExperienceSection experiences={serializedExperiences} />
         <EducationSection educations={serializedEducations} />
         <Contact about={serializedAbout} />
       </main>
+
       <Footer />
     </div>
   );

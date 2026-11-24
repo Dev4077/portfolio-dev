@@ -1,47 +1,110 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Hammer } from "lucide-react";
+import React from "react";
+import { Hammer, Sparkles, Terminal, Code2, ArrowRight } from "lucide-react";
+import { SakugaButton } from "@/components/sakuga";
 
 export function About({ about }: { about?: any }) {
+  const philosophy =
+    about?.codingPhilosophy ||
+    "Clean code is not written by following a set of rules. It is written by a programmer who genuinely cares — about readability, about maintainability, and about the next developer who will build upon it.";
+
+  const bio =
+    about?.bio ||
+    "I am a Full-stack Developer with a passion for building scalable, production-grade applications. I thrive at the intersection of elegant frontend experiences and robust backend systems. From React to Node.js and AI agent workflows, I craft software that solves real problems and scales with confidence.";
+
   return (
-    <section id="about" className="py-24 px-6 lg:px-8 border-b border-border">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-        <div className="lg:col-span-8">
-          <h2 className="text-xs font-sans font-bold uppercase tracking-widest text-foreground mb-8">
-            About
+    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#1d1a4a]/10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        {/* Left Column: Narrative */}
+        <div className="lg:col-span-7">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="sfx-tag text-[10px]">ORIGIN &amp; CREED</span>
+            <span className="text-xs font-bold text-[#8580b0]">CHAPTER 02</span>
+          </div>
+
+          <h2 className="font-sakuga-title text-3xl sm:text-4xl text-[#1d1a4a] mb-6">
+            A builder, not just a coder.
           </h2>
-          <div className="text-xl md:text-2xl font-sans text-foreground leading-relaxed font-medium">
-            <p className="mb-6">
-              I'm Dev — a builder, not just a coder.
+
+          <div className="text-base sm:text-lg text-[#1d1a4a]/85 leading-relaxed space-y-4 mb-8">
+            <p className="font-medium">
+              {bio}
             </p>
-            <p className="text-muted-foreground">
-              {about?.codingPhilosophy || "I enjoy solving real-world problems with technology. I'm curious about new ideas, AI, scalable systems, and building useful products."}
-            </p>
+          </div>
+
+          {/* Philosophy Manga Quote Box */}
+          <div className="manga-panel p-6 bg-[#f4f3fc] relative screentone-bg">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#ff5fa8] flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" /> Core Philosophy
+              </span>
+              <span className="sfx-tag text-[9px]">カチッ</span>
+            </div>
+
+            <blockquote className="font-sakuga-title text-base sm:text-lg text-[#1d1a4a] leading-relaxed italic">
+              &ldquo;{philosophy}&rdquo;
+            </blockquote>
+
+            <div className="mt-4 pt-3 border-t border-[#dcdaf0] flex items-center justify-between text-xs font-bold text-[#8580b0]">
+              <span>Dev Sakarsawala</span>
+              <span className="font-mono text-[11px]">Engineering Manifesto</span>
+            </div>
           </div>
         </div>
 
-        <div className="lg:col-span-4 lg:pt-12">
-          <div className="bg-muted/30 p-6 rounded-md border border-border/50">
-            <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-foreground flex items-center mb-4">
-              Currently Building
-            </h3>
-            
-            <div className="flex items-start">
-              <div className="mt-1 mr-3 text-accent bg-accent/10 p-1.5 rounded-sm">
-                <Hammer className="h-4 w-4" />
+        {/* Right Column: Currently Building & Photo Card */}
+        <div className="lg:col-span-5 flex flex-col gap-6">
+          {/* Currently Building Card with Dev's Photo */}
+          <div className="manga-card p-6 bg-white border-2 border-[#1d1a4a] shadow-[4px_4px_0px_#1d1a4a]">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-[#1d1a4a] shrink-0 bg-[#f4f3fc]">
+                <img
+                  src="/profile.jpg"
+                  alt="Dev Sakarsawala"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               <div>
-                <h4 className="text-sm font-sans font-medium text-foreground mb-1">
-                  Agentic Workflows
-                </h4>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                  Exploring autonomous agents that can plan and execute complex tasks using LangChain.
-                </p>
-                <a href="#projects" className="text-xs font-sans font-medium text-foreground hover:text-accent transition-colors">
-                  View details &rarr;
-                </a>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="sfx-tag text-[8px] bg-[#ff5fa8]">ACTIVE LAB</span>
+                  <span className="text-[11px] font-bold text-[#8580b0]">SDE-1</span>
+                </div>
+                <h3 className="font-sakuga-title text-lg text-[#1d1a4a]">
+                  Agentic Graph Workflows
+                </h3>
               </div>
+            </div>
+
+            <p className="text-xs sm:text-sm text-[#8580b0] leading-relaxed mb-6">
+              Engineering autonomous workflows where specialized agents plan, coordinate, and execute multi-step operations using LangChain, LangGraph, and Gemini 2.5 API reasoning loops.
+            </p>
+
+            <a
+              href="#projects"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              <SakugaButton variant="secondary" className="w-full text-center">
+                Explore Projects &rarr;
+              </SakugaButton>
+            </a>
+          </div>
+
+          {/* Core Focus Badges */}
+          <div className="manga-card p-6 bg-[#f4f3fc]">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#8580b0] mb-3">
+              Specialized Focus Areas
+            </h4>
+
+            <div className="flex flex-wrap gap-2">
+              <span className="manga-badge text-xs bg-white">MERN Architecture</span>
+              <span className="manga-badge text-xs bg-white">LangGraph Workflows</span>
+              <span className="manga-badge text-xs bg-white">Next.js App Router</span>
+              <span className="manga-badge text-xs bg-white">Redis Query Caching</span>
+              <span className="manga-badge text-xs bg-white">Docker &amp; Microservices</span>
             </div>
           </div>
         </div>

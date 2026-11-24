@@ -1,215 +1,185 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400..800;1,400..800&family=Nunito:ital,wght@0,600..900;1,700..900&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
-
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
-  --color-card-border: hsl(var(--card-border));
-
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-  --color-popover-border: hsl(var(--popover-border));
-
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-primary-border: var(--primary-border);
-
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-  --color-secondary-border: var(--secondary-border);
-
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-muted-border: var(--muted-border);
-
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-  --color-accent-border: var(--accent-border);
-
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-  --color-destructive-border: var(--destructive-border);
-
-  --color-chart-1: hsl(var(--chart-1));
-  --color-chart-2: hsl(var(--chart-2));
-  --color-chart-3: hsl(var(--chart-3));
-  --color-chart-4: hsl(var(--chart-4));
-  --color-chart-5: hsl(var(--chart-5));
-
-  --color-sidebar: hsl(var(--sidebar));
-  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
-  --color-sidebar-border: hsl(var(--sidebar-border));
-  --color-sidebar-primary: hsl(var(--sidebar-primary));
-  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
-  --color-sidebar-primary-border: var(--sidebar-primary-border);
-  --color-sidebar-accent: hsl(var(--sidebar-accent));
-  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
-  --color-sidebar-accent-border: var(--sidebar-accent-border);
-  --color-sidebar-ring: hsl(var(--sidebar-ring));
-
-  --font-sans: var(--app-font-sans);
-  --font-serif: var(--app-font-serif);
-  --font-mono: var(--app-font-mono);
-
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-}
-
 :root {
-  --background: 60 20% 97.5%; /* #FAFAF7 */
-  --foreground: 205 17% 14%; /* #1D2429 */
-  --card: 72 18% 95%; /* #F3F4EF */
-  --card-foreground: 205 17% 14%;
-  --card-border: 60 11% 90%; /* #E7E7E2 */
-  --popover: 72 18% 95%;
-  --popover-foreground: 205 17% 14%;
-  --popover-border: 60 11% 90%;
-  --primary: 205 17% 14%; /* Dark charcoal */
-  --primary-foreground: 60 20% 97.5%;
-  --secondary: 72 18% 95%;
-  --secondary-foreground: 205 17% 14%;
-  --muted: 72 18% 95%;
-  --muted-foreground: 206 6% 44%; /* #697177 */
-  --accent: 146 26% 50%; /* #5E9F7A */
-  --accent-foreground: 60 20% 97.5%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 95%;
-  --border: 60 11% 90%;
-  --input: 60 11% 90%;
-  --ring: 205 17% 14%;
-  --radius: 0.5rem;
-  --sidebar: 72 18% 95%;
-  --sidebar-foreground: 205 17% 14%;
-  --sidebar-border: 60 11% 90%;
-  --sidebar-primary: 205 17% 14%;
-  --sidebar-primary-foreground: 60 20% 97.5%;
-  --sidebar-accent: 60 11% 90%;
-  --sidebar-accent-foreground: 205 17% 14%;
-  --sidebar-ring: 205 17% 14%;
-  --chart-1: 146 26% 50%;
-  --chart-2: 205 17% 14%;
-  --chart-3: 206 6% 44%;
-  --chart-4: 60 11% 90%;
-  --chart-5: 0 84% 60%;
-  
-  --app-font-sans: 'Inter', 'Geist', 'Space Grotesk', sans-serif;
+  --page: #ffffff;
+  --text: #1d1a4a;
+  --mute: #8580b0;
+  --line: #dcdaf0;
+  --chip: #f4f3fc;
+  --card: #ffffff;
+
+  /* Sakuga core variables */
+  --sk-card: #ffffff;
+  --sk-ink: #1d1a4a;
+  --sk-dim: #8580b0;
+  --sk-soft: #b8b3ff;
+  --sk-pri: #8f8df7;
+  --sk-pri-ink: #1d1a4a;
+  --sk-acc: #ff5fa8;
+  --sk-track: #c9cbe0;
+  --sk-r: 16px;
+  --sk-bw: 2.5px;
+  --sk-sh: 4px 4px 0px #1d1a4a;
+  --sk-btn-sh: 4px 4px 0px #1d1a4a;
+  --sk-btn-line: #1d1a4a;
+  --sk-alt-sh: 3px 3px 0px #dcdaf0;
+  --sk-alt-line: #1d1a4a;
+  --sk-tick: #1d1a4a;
+  --sk-fill: #ff5fa8;
+  --sk-on-pri: #ffffff;
+
+  /* Theme mappings for Tailwind */
+  --background: 0 0% 100%;
+  --foreground: 243 48% 20%; /* #1d1a4a */
+  --muted: 245 60% 97%; /* #f4f3fc */
+  --muted-foreground: 246 25% 60%; /* #8580b0 */
+  --accent: 333 100% 69%; /* #ff5fa8 */
+  --accent-foreground: 0 0% 100%;
+  --primary: 241 84% 76%; /* #8f8df7 */
+  --primary-foreground: 243 48% 20%;
+  --border: 244 50% 90%; /* #dcdaf0 */
+  --input: 244 50% 90%;
+  --ring: 333 100% 69%;
+  --radius: 18px;
+
+  --app-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --app-font-mono: 'JetBrains Mono', monospace;
-  --app-font-serif: Georgia, serif;
+  --app-font-display: 'Nunito', 'Avenir Next', -apple-system, sans-serif;
 }
 
 @layer base {
   * {
-    @apply border-border;
+    box-sizing: border-box;
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+    background: var(--page);
+    color: var(--text);
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    margin: 0;
+    color: var(--text);
+    background: var(--page);
+    font: 500 15px/1.55 var(--app-font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: #ff5fa8;
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--sk-acc);
+    outline-offset: 3px;
   }
 }
 
-.pixel-grid {
-  background-size: 40px 40px;
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+/* Manga / Comic / Sakuga VFX Styles */
+.font-sakuga-title {
+  font-family: var(--app-font-display);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.02em;
 }
 
-.scanline::after {
-  display: none;
+.manga-panel {
+  background: #ffffff;
+  border: 2.5px solid var(--text);
+  border-radius: 20px;
+  box-shadow: 4px 4px 0px var(--text);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease;
 }
 
-.glass-panel {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+.manga-panel:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--text);
 }
 
-.neon-border {
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+.manga-card {
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
+  transition: all 0.2s ease;
 }
 
-.neon-border:hover {
-  border-color: hsl(var(--accent));
+.manga-card:hover {
+  border-color: var(--text);
+  box-shadow: 3px 3px 0px var(--text);
 }
 
-.timeline-glow {
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
+.manga-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--chip);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.15s;
 }
 
-@layer utilities {
-  input[type="search"]::-webkit-search-cancel-button {
-    @apply hidden;
-  }
+.manga-badge:hover {
+  border-color: var(--text);
+  transform: translateY(-1px);
+}
 
-  [contenteditable][data-placeholder]:empty::before {
-    content: attr(data-placeholder);
-    color: hsl(var(--muted-foreground));
-    pointer-events: none;
-  }
+.manga-badge-pink {
+  background: #ffe4f1;
+  border-color: #ffb3d7;
+  color: #c71569;
+}
 
-  .toggle-elevate::before,
-  .toggle-elevate-2::before {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    inset: 0px;
-    border-radius: inherit;
-    z-index: -1;
-  }
+.manga-badge-pink:hover {
+  border-color: #ff5fa8;
+}
 
-  .toggle-elevate.toggle-elevated::before {
-    background-color: var(--elevate-2);
-  }
+.screentone-bg {
+  background-image: radial-gradient(circle, #dcdaf0 1.2px, transparent 1.2px);
+  background-size: 16px 16px;
+}
 
-  .border.toggle-elevate::before {
-    inset: -1px;
-  }
+.screentone-soft {
+  background-image: radial-gradient(circle, #ebe9fb 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
 
-  .hover-elevate:not(.no-default-hover-elevate),
-  .active-elevate:not(.no-default-active-elevate),
-  .hover-elevate-2:not(.no-default-hover-elevate),
-  .active-elevate-2:not(.no-default-active-elevate) {
-    position: relative;
-    z-index: 0;
-  }
+.manga-shadow {
+  box-shadow: 4px 4px 0px var(--text);
+}
 
-  .hover-elevate:not(.no-default-hover-elevate)::after,
-  .active-elevate:not(.no-default-active-elevate)::after,
-  .hover-elevate-2:not(.no-default-hover-elevate)::after,
-  .active-elevate-2:not(.no-default-active-elevate)::after {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    inset: 0px;
-    border-radius: inherit;
-    z-index: 999;
-  }
+.manga-shadow-pink {
+  box-shadow: 4px 4px 0px #ff5fa8;
+}
 
-  .hover-elevate:hover:not(.no-default-hover-elevate)::after,
-  .active-elevate:active:not(.no-default-active-elevate)::after {
-    background-color: var(--elevate-1);
-  }
+.manga-shadow-soft {
+  box-shadow: 4px 4px 0px #dcdaf0;
+}
 
-  .hover-elevate-2:hover:not(.no-default-hover-elevate)::after,
-  .active-elevate-2:active:not(.no-default-active-elevate)::after {
-    background-color: var(--elevate-2);
-  }
-
-  .border.hover-elevate:not(.no-hover-interaction-elevate)::after,
-  .border.active-elevate:not(.no-active-interaction-elevate)::after,
-  .border.hover-elevate-2:not(.no-hover-interaction-elevate)::after,
-  .border.active-elevate-2:not(.no-active-interaction-elevate)::after {
-    inset: -1px;
-  }
+/* Sound effect comic badge */
+.sfx-tag {
+  font-family: var(--app-font-display);
+  font-style: italic;
+  font-weight: 900;
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--text);
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
