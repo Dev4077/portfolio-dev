@@ -104,12 +104,6 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
                 Let&apos;s Build Together &rarr;
               </SakugaButton>
             </a>
-
-            <Link href="/interactive-lab">
-              <span className="manga-badge text-xs hover:border-[#dc2626] text-[#dc2626] bg-[#fff1f2] border-[#fecdd3]">
-                Interactive Lab ⚡
-              </span>
-            </Link>
           </div>
 
           {/* Stat Badges in Manga Panel format */}

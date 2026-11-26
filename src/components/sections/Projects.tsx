@@ -186,29 +186,75 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
               </div>
             </div>
 
-            {/* Right: Manga Illustration Container */}
+            {/* Right: Live Interactive Website Preview (iframe) */}
             <div className="lg:col-span-5 flex flex-col justify-center">
-              <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden border-2 border-[#18181b] bg-[#fff1f2] relative group shadow-[3px_3px_0px_#18181b]">
-                {project.imageUrl ? (
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center screentone-bg">
-                    <div className="w-12 h-12 rounded-xl bg-[#18181b] text-white flex items-center justify-center font-sakuga-title text-xl mb-3 shadow-[2px_2px_0px_#dc2626]">
-                      {(idx + 1).toString().padStart(2, "0")}
-                    </div>
-                    <span className="font-sakuga-title text-base text-[#18181b]">
-                      {project.title}
-                    </span>
-                    <span className="sfx-tag text-[9px] mt-2">PRODUCTION READY</span>
+              <div className="w-full h-[360px] sm:h-[420px] lg:h-[460px] rounded-2xl overflow-hidden border-2 border-[#18181b] bg-[#18181b] relative group shadow-[4px_4px_0px_#18181b] flex flex-col">
+                {/* Browser Top Bar */}
+                <div className="h-10 bg-[#18181b] text-white px-3 sm:px-4 flex items-center justify-between shrink-0 select-none border-b border-[#27272a]">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]" />
                   </div>
-                )}
 
-                <div className="absolute top-3 right-3 bg-[#18181b]/90 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-[10px] font-bold">
-                  SDE ARCHITECTURE
+                  {project.liveUrl ? (
+                    <div className="flex items-center gap-1.5 bg-[#27272a] px-3 py-1 rounded-md text-[11px] font-mono text-[#a1a1aa] max-w-[200px] sm:max-w-[260px] truncate">
+                      <span className="text-[#10b981] text-[10px]">🔒</span>
+                      <span className="truncate">
+                        {project.liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-[10px] font-mono text-[#71717a]">
+                      PREVIEW
+                    </span>
+                  )}
+
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-1 bg-[#10b981]/10 border border-[#10b981]/30 px-1.5 py-0.5 rounded text-[9px] font-bold text-[#10b981]">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#10b981]"></span>
+                      </span>
+                      <span>LIVE</span>
+                    </div>
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-[#a1a1aa] hover:text-[#ef4444] transition-colors p-1"
+                        title="Open live site in new tab"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                {/* Live Preview Iframe */}
+                <div className="relative flex-1 w-full bg-white overflow-hidden">
+                  {project.liveUrl ? (
+                    <iframe
+                      src={project.liveUrl}
+                      title={`${project.title} Live Preview`}
+                      className="w-full h-full border-0 bg-white"
+                      loading="lazy"
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center screentone-bg bg-[#fff1f2]">
+                      <div className="w-12 h-12 rounded-xl bg-[#18181b] text-white flex items-center justify-center font-sakuga-title text-xl mb-3 shadow-[2px_2px_0px_#dc2626]">
+                        {(idx + 1).toString().padStart(2, "0")}
+                      </div>
+                      <span className="font-sakuga-title text-base text-[#18181b]">
+                        {project.title}
+                      </span>
+                      <span className="sfx-tag text-[9px] mt-2 bg-[#dc2626]">
+                        PRODUCTION READY
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
