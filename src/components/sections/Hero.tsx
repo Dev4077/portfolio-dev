@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Code2,
@@ -11,10 +11,11 @@ import {
   Eye,
   EyeOff,
   Crosshair,
-  Volume2,
-  ChevronRight,
-  ShieldCheck,
+  Terminal,
   Cpu,
+  Binary,
+  Flame,
+  Braces,
 } from "lucide-react";
 import { SakugaButton } from "@/components/sakuga";
 
@@ -33,7 +34,7 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const riderRef = useRef<HTMLDivElement>(null);
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); // relative to rider
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); // relative to portrait
   const [relativePos, setRelativePos] = useState({ xPercent: 50, yPercent: 50 });
   const [isHovering, setIsHovering] = useState(false);
   const [isNearVisor, setIsNearVisor] = useState(false);
@@ -59,15 +60,15 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
       setMousePos({ x, y });
       setRelativePos({ xPercent, yPercent });
 
-      // Determine if cursor is near the helmet/visor region
-      // In our 3:4 portrait: helmet is centered horizontally (25%..75%), visor is y: (16%..44%)
+      // Determine if cursor is near the AR glasses/visor region
+      // AR glasses are located at roughly x: 26%..74%, y: 20%..42%
       const inVisorZone =
-        xPercent >= 22 && xPercent <= 78 && yPercent >= 12 && yPercent <= 48;
+        xPercent >= 24 && xPercent <= 76 && yPercent >= 16 && yPercent <= 44;
       setIsNearVisor(inVisorZone);
 
       // 3D Parallax tilt (subtle and high quality)
-      const tiltX = ((yPercent - 50) / 50) * -4;
-      const tiltY = ((xPercent - 50) / 50) * 5;
+      const tiltX = ((yPercent - 50) / 50) * -3.5;
+      const tiltY = ((xPercent - 50) / 50) * 4.5;
       setTilt({ rotateX: tiltX, rotateY: tiltY });
     },
     []
@@ -128,11 +129,11 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
       id="hero"
       className="pt-4 sm:pt-8 pb-16 px-3 sm:px-6 lg:px-8 border-b-2 border-[#18181b]/10"
     >
-      {/* Top Banner / Status Line */}
+      {/* Top Banner / Engineering Status Line */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
           <span className="sfx-tag text-[10px] animate-pulse bg-[#18181b] text-white">
-            HERO SECTION
+            HERO // SYSTEM
           </span>
 
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#fee2e2] bg-[#fff1f2] text-xs font-bold text-[#18181b]">
@@ -140,7 +141,7 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#dc2626] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#dc2626]"></span>
             </span>
-            <span>RACING SPEC // SDE ACTIVE</span>
+            <span>ACTIVE SDE // FULL-STACK &amp; AGENTIC AI</span>
           </div>
 
           <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#fee2e2] bg-white text-xs font-bold text-[#18181b]">
@@ -152,41 +153,51 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
           </div>
         </div>
 
-        {/* Visor Quick State Indicator / Toggle */}
+        {/* Visor State Toggle Button */}
         <button
           onClick={toggleVisor}
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full border-2 border-[#18181b] bg-white text-xs font-bold text-[#18181b] shadow-[2px_2px_0px_#18181b] hover:shadow-[3px_3px_0px_#dc2626] hover:border-[#dc2626] transition-all cursor-pointer"
-          title="Click to toggle helmet visor open/closed"
+          title="Click to toggle AR Code Visor on/off"
         >
           {isVisorLockedOpen ? (
             <>
               <Eye className="w-3.5 h-3.5 text-[#dc2626]" />
-              <span className="text-[#dc2626]">VISOR LIFTED // FACE REVEALED</span>
+              <span className="text-[#dc2626]">AR VISOR LIFTED // CLEAR FACE</span>
             </>
           ) : (
             <>
-              <EyeOff className="w-3.5 h-3.5 text-[#71717a]" />
-              <span>VISOR TINTED // CLICK TO LIFT</span>
+              <Binary className="w-3.5 h-3.5 text-[#dc2626]" />
+              <span>AR CODE VISOR // HOVER TO REVEAL</span>
             </>
           )}
         </button>
       </div>
 
-      {/* Main Cinematic Racing Canvas / Stage */}
+      {/* Main Coding Hero Stage / Canvas */}
       <div
         ref={stageRef}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="w-full min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] rounded-3xl border-2 border-[#18181b] bg-gradient-to-b from-[#f5f6f8] via-[#e9edf2] to-[#e4e8ee] relative overflow-hidden shadow-[6px_6px_0px_#18181b] flex flex-col justify-between p-4 sm:p-8 lg:p-12 select-none"
+        className="w-full min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] rounded-3xl border-2 border-[#18181b] bg-gradient-to-b from-[#f8f9fa] via-[#eef2f6] to-[#e4e9f0] relative overflow-hidden shadow-[6px_6px_0px_#18181b] flex flex-col justify-between p-4 sm:p-8 lg:p-12 select-none"
       >
-        {/* Subtle Background Track Grid & Vignette */}
+        {/* Subtle Developer Track Grid & Background Glow */}
         <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px]" />
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_35%,rgba(255,255,255,0.85)_0%,transparent_70%)]" />
 
-        {/* Layer 1: Giant Split Backdrop Typography - "RED LINE" */}
+        {/* Floating Developer Chips around Stage */}
+        <div className="absolute top-8 left-8 hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-[#fee2e2] text-[11px] font-mono font-bold text-[#dc2626] shadow-sm pointer-events-none animate-pulse">
+          <Braces className="w-3 h-3 text-[#dc2626]" />
+          <span>LangGraph Agents</span>
+        </div>
+        <div className="absolute top-12 right-12 hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-[#18181b]/10 text-[11px] font-mono font-bold text-[#18181b] shadow-sm pointer-events-none">
+          <Cpu className="w-3 h-3 text-[#10b981]" />
+          <span>Next.js 16 • React 19</span>
+        </div>
+
+        {/* Layer 1: Giant Split Backdrop Typography - "DEV" & "CODE" */}
         <div className="absolute inset-0 flex items-center justify-between px-2 sm:px-6 lg:px-12 pointer-events-none z-10">
-          {/* Left: "RED" */}
+          {/* Left: "DEV" */}
           <div className="flex-1 flex justify-start">
             <span
               className="text-[#dc2626] font-black uppercase tracking-[-0.05em] leading-none select-none text-[22vw] sm:text-[20vw] lg:text-[180px] xl:text-[220px] drop-shadow-[0_4px_24px_rgba(220,38,38,0.18)]"
@@ -195,11 +206,11 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
                 WebkitTextStroke: "1px rgba(220, 38, 38, 0.4)",
               }}
             >
-              RED
+              DEV
             </span>
           </div>
 
-          {/* Right: "LINE" */}
+          {/* Right: "CODE" */}
           <div className="flex-1 flex justify-end">
             <span
               className="text-[#18181b] font-black uppercase tracking-[-0.05em] leading-none select-none text-[22vw] sm:text-[20vw] lg:text-[180px] xl:text-[220px] drop-shadow-[0_4px_24px_rgba(24,24,27,0.12)]"
@@ -208,12 +219,12 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
                 WebkitTextStroke: "1px rgba(24, 24, 27, 0.4)",
               }}
             >
-              LINE
+              CODE
             </span>
           </div>
         </div>
 
-        {/* Layer 2: Central Motorcycle Racer with Dynamic Visor Reveal */}
+        {/* Layer 2: Central Developer Silhouette with Interactive AR Visor Reveal */}
         <div
           ref={riderRef}
           onClick={toggleVisor}
@@ -228,15 +239,15 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
               transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
             }}
           >
-            {/* Base Image: Visor Closed (Dark Tinted Mirror Visor) */}
+            {/* Base Image: AR Visor Active (Reflecting Glowing Red Code Stream) */}
             <img
-              src="/hero-cutout-closed.webp"
-              alt="Dev Sakarsawala - Racing Helmet Visor Closed"
+              src="/dev-coding-closed.webp"
+              alt="Dev Sakarsawala - AR Code Visor"
               className="absolute inset-0 w-full h-full object-contain pointer-events-none drop-shadow-[0_20px_35px_rgba(24,24,27,0.22)] select-none"
               loading="eager"
             />
 
-            {/* Overlay Image: Visor Open (Revealing Dev's Face) */}
+            {/* Overlay Image: Visor Lifted / Open (Revealing Dev's Face & Natural Eyes) */}
             <div
               className="absolute inset-0 w-full h-full pointer-events-none transition-[mask-image] duration-150"
               style={{
@@ -253,14 +264,14 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
               }}
             >
               <img
-                src="/hero-cutout-open.webp"
-                alt="Dev Sakarsawala - Visor Open Face Revealed"
+                src="/dev-coding-open.webp"
+                alt="Dev Sakarsawala - Face Revealed"
                 className="w-full h-full object-contain select-none"
                 loading="eager"
               />
             </div>
 
-            {/* Interactive Visor Refraction & Smoke Glow Cursor Ring */}
+            {/* Interactive Visor Lens HUD Ring that tracks cursor */}
             {isHovering && !isVisorLockedOpen && (
               <div
                 className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/80 bg-white/10 backdrop-blur-[1px] shadow-[0_0_30px_rgba(255,255,255,0.7),inset_0_0_15px_rgba(220,38,38,0.25)] transition-opacity duration-100 z-30 flex items-center justify-center"
@@ -276,8 +287,8 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
                 {isNearVisor && (
                   <div className="relative w-full h-full flex items-center justify-center">
                     <Crosshair className="w-5 h-5 text-[#dc2626] animate-pulse" />
-                    <span className="absolute -bottom-6 bg-[#18181b]/90 text-white font-mono text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap border border-[#dc2626]/50">
-                      FACE REVEALED // DEV
+                    <span className="absolute -bottom-6 bg-[#18181b]/95 text-white font-mono text-[9px] font-bold px-2.5 py-0.5 rounded-full whitespace-nowrap border border-[#dc2626]/50 shadow-md">
+                      DECODE // FACE REVEALED
                     </span>
                   </div>
                 )}
@@ -292,19 +303,19 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
           <div className="bg-white/85 sm:bg-white/90 backdrop-blur-md p-5 sm:p-6 rounded-2xl border-2 border-[#18181b] shadow-[4px_4px_0px_#18181b] space-y-4">
             <div>
               <span className="text-[#dc2626] font-mono text-xs font-bold tracking-wider uppercase block mb-1">
-                // SDE RACING ARCHITECTURE
+                // SDE &amp; AGENTIC ARCHITECT
               </span>
               <h1 className="font-black text-2xl sm:text-3xl lg:text-4xl text-[#18181b] uppercase tracking-tight leading-none">
-                BRAKE LATE.
+                COMPILE IDEAS.
                 <br />
-                <span className="text-[#dc2626]">LEAVE NOTHING.</span>
+                <span className="text-[#dc2626]">SHIP PRODUCTION.</span>
               </h1>
             </div>
 
             <p className="text-xs sm:text-sm text-[#18181b]/80 leading-relaxed font-medium">
               <strong className="text-[#18181b]">Dev Sakarsawala</strong> —{" "}
-              {role}. Turning ambitious product ideas into high-speed,
-              production-grade web platforms and autonomous AI agent pipelines.
+              {role}. Architecting modern full-stack web platforms, autonomous
+              LangGraph agent workflows, and high-performance cloud applications.
             </p>
 
             {/* Action Buttons */}
@@ -317,7 +328,7 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
                 }}
               >
                 <SakugaButton variant="primary">
-                  JOIN THE GRID ⚡
+                  EXPLORE WORK ⚡
                 </SakugaButton>
               </a>
 
@@ -329,7 +340,7 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
                 }}
               >
                 <SakugaButton variant="secondary">
-                  WATCH THE LAP ↗
+                  TERMINAL CONTACT ↗
                 </SakugaButton>
               </a>
             </div>
@@ -345,55 +356,55 @@ export function Hero({ about, skills }: { about?: any; skills?: any }) {
               </span>
               <span className="font-mono text-[11px] font-bold text-[#18181b] group-hover/hint:text-[#dc2626] transition-colors">
                 {isVisorLockedOpen
-                  ? "• VISOR IS LIFTED (CLICK TO LOWER)"
-                  : "• MOVE TO LIFT THE VISOR"}
+                  ? "• AR VISOR LIFTED (CLICK TO LOWER)"
+                  : "• HOVER AR VISOR TO REVEAL // CLICK TO TOGGLE"}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Right Side: Telemetry & Rider Spec Card (matching reference UI) */}
+        {/* Right Side: Live Developer Terminal & Telemetry Card */}
         <div className="relative z-30 self-end max-w-[280px] sm:max-w-[320px] w-full pointer-events-auto mt-4 lg:mt-0">
           <div className="bg-[#18181b] text-white p-4 sm:p-5 rounded-2xl border-2 border-[#18181b] shadow-[4px_4px_0px_#dc2626] flex flex-col gap-3">
             <div className="flex items-center justify-between border-b border-[#27272a] pb-2.5">
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse" />
                 <span className="font-mono text-xs font-bold tracking-wider text-[#a1a1aa]">
-                  RIDER 07 // DEV
+                  DEV.KERNEL // v2.5
                 </span>
               </div>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#27272a] text-[#dc2626] font-bold">
-                GRID READY
+                DEPLOYED
               </span>
             </div>
 
             {/* Spec lines */}
             <div className="space-y-1.5 font-mono text-[11px]">
               <div className="flex justify-between text-[#a1a1aa]">
-                <span>CALLSIGN</span>
-                <span className="text-white font-bold">// VERMILION</span>
+                <span>ENGINEER</span>
+                <span className="text-white font-bold">// DEV SAKARSAWALA</span>
               </div>
               <div className="flex justify-between text-[#a1a1aa]">
-                <span>DISPATCH</span>
-                <span className="text-white font-bold">// FULL-STACK SDE</span>
+                <span>CORE STACK</span>
+                <span className="text-white font-bold">// NEXT.JS • REACT 19</span>
               </div>
               <div className="flex justify-between text-[#a1a1aa]">
                 <span>AGENT ENGINE</span>
-                <span className="text-white font-bold">// LANGGRAPH + GEMINI</span>
+                <span className="text-white font-bold">// LANGGRAPH &amp; GEMINI</span>
               </div>
               <div className="flex justify-between text-[#a1a1aa]">
                 <span>STATUS</span>
-                <span className="text-[#10b981] font-bold">// ON THE GRID</span>
+                <span className="text-[#10b981] font-bold">// ACTIVE ON CORE</span>
               </div>
             </div>
 
             <div className="pt-2 border-t border-[#27272a] flex items-center justify-between text-[10px] font-mono text-[#71717a]">
-              <span>TELEMETRY: 99.9% UPTIME</span>
+              <span>UPTIME: 99.9% PROD</span>
               <button
                 onClick={toggleVisor}
                 className="text-[#dc2626] hover:underline font-bold"
               >
-                {isVisorLockedOpen ? "CLOSE VISOR" : "LIFT VISOR"}
+                {isVisorLockedOpen ? "LOWER AR VISOR" : "LIFT AR VISOR"}
               </button>
             </div>
           </div>
