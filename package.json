@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node init && next dev -H 127.0.0.1 -p 3003",
-    "build": "node init && next build",
-    "start": "node init && next start",
+    "dev": "next dev -H 127.0.0.1 -p 3003",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
