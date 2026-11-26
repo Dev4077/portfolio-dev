@@ -59,7 +59,7 @@ export function SakugaStation() {
   };
 
   return (
-    <section id="vfx-station" className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#18181b]/10 bg-[#ffffff]">
+    <section id="vfx-station" suppressHydrationWarning className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#18181b]/10 bg-[#ffffff]">
       {/* Toast Element mounted in fixed viewport corner */}
       <div className="fixed bottom-6 left-6 z-50 pointer-events-auto">
         <SakugaToast ref={toastRef} duration={3} message="Anime VFX System Initialized!" />

@@ -139,11 +139,34 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" style={{ scrollBehavior: "smooth" }}>
+    <html lang="en" style={{ scrollBehavior: "smooth" }} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="alternate icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  if (typeof MutationObserver !== 'undefined') {
+                    const observer = new MutationObserver(function(mutations) {
+                      for (let i = 0; i < mutations.length; i++) {
+                        const m = mutations[i];
+                        if (m.type === 'attributes' && m.attributeName === 'bis_skin_checked') {
+                          m.target.removeAttribute('bis_skin_checked');
+                        }
+                      }
+                    });
+                    observer.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ['bis_skin_checked'] });
+                  }
+                  const els = document.querySelectorAll('[bis_skin_checked]');
+                  for (let i = 0; i < els.length; i++) els[i].removeAttribute('bis_skin_checked');
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -161,7 +184,7 @@ export default function RootLayout({
         <script src="/sakuga-vfx/toast.js" defer></script>
         <script src="/sakuga-vfx/tooltip.js" defer></script>
       </head>
-      <body className="antialiased selection:bg-[#dc2626] selection:text-white min-h-screen">
+      <body suppressHydrationWarning className="antialiased selection:bg-[#dc2626] selection:text-white min-h-screen">
         <SakugaClientScripts />
         {children}
       </body>
