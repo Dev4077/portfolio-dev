@@ -57,3 +57,4 @@ temp_interactive_push.bat
 client/.next
 config.bat
 .env
+*.pem
