@@ -60,18 +60,18 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
     filter === "ALL" ? allProjects : allProjects.filter((p) => p.category === filter);
 
   return (
-    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#1d1a4a]/10">
+    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#18181b]/10">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="sfx-tag text-[10px]">SELECTED WORKS</span>
-            <span className="text-xs font-bold text-[#8580b0]">CHAPTER 04</span>
+            <span className="text-xs font-bold text-[#71717a]">CHAPTER 04</span>
           </div>
-          <h2 className="font-sakuga-title text-3xl sm:text-4xl text-[#1d1a4a]">
+          <h2 className="font-sakuga-title text-3xl sm:text-4xl text-[#18181b]">
             Featured Engineering Projects
           </h2>
-          <p className="text-sm text-[#8580b0] max-w-xl mt-2">
+          <p className="text-sm text-[#71717a] max-w-xl mt-2">
             Production-grade systems, AI-powered web applications, and real-world tools with responsive interfaces and robust backends.
           </p>
         </div>
@@ -80,7 +80,7 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
           href="https://github.com/Dev4077"
           target="_blank"
           rel="noreferrer"
-          className="manga-badge text-xs hover:border-[#1d1a4a] self-start md:self-auto"
+          className="manga-badge text-xs hover:border-[#18181b] self-start md:self-auto"
         >
           <span>View All on GitHub</span>
           <span aria-hidden="true">&#8599;</span>
@@ -96,8 +96,8 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
               onClick={() => setFilter(cat)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all ${
                 filter === cat
-                  ? "bg-[#1d1a4a] text-white shadow-[2px_2px_0px_#ff5fa8]"
-                  : "bg-[#f4f3fc] text-[#1d1a4a] border border-[#dcdaf0] hover:border-[#1d1a4a]"
+                  ? "bg-[#18181b] text-white shadow-[2px_2px_0px_#dc2626]"
+                  : "bg-[#fff1f2] text-[#18181b] border border-[#fee2e2] hover:border-[#18181b]"
               }`}
             >
               {cat}
@@ -117,39 +117,39 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
             <div className="lg:col-span-7 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="font-mono text-xs font-bold text-white bg-[#1d1a4a] px-2.5 py-1 rounded-md">
+                  <span className="font-mono text-xs font-bold text-white bg-[#18181b] px-2.5 py-1 rounded-md">
                     ACT #{(idx + 1).toString().padStart(2, "0")}
                   </span>
                   {project.category && (
-                    <span className="manga-badge text-[11px] h-6 py-0 bg-[#f4f3fc] border-[#dcdaf0]">
+                    <span className="manga-badge text-[11px] h-6 py-0 bg-[#fff1f2] border-[#fee2e2]">
                       {project.category}
                     </span>
                   )}
                   {project.year && (
-                    <span className="text-xs font-mono text-[#8580b0] ml-auto">
+                    <span className="text-xs font-mono text-[#71717a] ml-auto">
                       {project.year}
                     </span>
                   )}
                 </div>
 
-                <h3 className="font-sakuga-title text-2xl sm:text-3xl text-[#1d1a4a] mb-3 leading-snug">
+                <h3 className="font-sakuga-title text-2xl sm:text-3xl text-[#18181b] mb-3 leading-snug">
                   {project.title}
                 </h3>
 
-                <p className="text-sm sm:text-base text-[#1d1a4a]/80 leading-relaxed mb-6 font-normal">
+                <p className="text-sm sm:text-base text-[#18181b]/80 leading-relaxed mb-6 font-normal">
                   {project.description}
                 </p>
 
                 {/* Tech Stack Chips */}
                 <div className="mb-8">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#8580b0] mb-2 flex items-center gap-1.5">
-                    <Layers className="w-3 h-3 text-[#ff5fa8]" /> Technologies &amp; Toolchain
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#71717a] mb-2 flex items-center gap-1.5">
+                    <Layers className="w-3 h-3 text-[#dc2626]" /> Technologies &amp; Toolchain
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {project.techStack?.map((tech: string) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-1 rounded-lg border border-[#dcdaf0] bg-[#f4f3fc] text-xs font-bold text-[#1d1a4a]"
+                        className="px-2.5 py-1 rounded-lg border border-[#fee2e2] bg-[#fff1f2] text-xs font-bold text-[#18181b]"
                       >
                         {tech}
                       </span>
@@ -159,7 +159,7 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
               </div>
 
               {/* Action Buttons using Sakuga Controls */}
-              <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-[#dcdaf0]">
+              <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-[#fee2e2]">
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}
@@ -188,7 +188,7 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
 
             {/* Right: Manga Illustration Container */}
             <div className="lg:col-span-5 flex flex-col justify-center">
-              <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden border-2 border-[#1d1a4a] bg-[#f4f3fc] relative group shadow-[3px_3px_0px_#1d1a4a]">
+              <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden border-2 border-[#18181b] bg-[#fff1f2] relative group shadow-[3px_3px_0px_#18181b]">
                 {project.imageUrl ? (
                   <img
                     src={project.imageUrl}
@@ -197,17 +197,17 @@ export function Projects({ projects = [] }: { projects?: any[] }) {
                   />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center screentone-bg">
-                    <div className="w-12 h-12 rounded-xl bg-[#1d1a4a] text-white flex items-center justify-center font-sakuga-title text-xl mb-3 shadow-[2px_2px_0px_#ff5fa8]">
+                    <div className="w-12 h-12 rounded-xl bg-[#18181b] text-white flex items-center justify-center font-sakuga-title text-xl mb-3 shadow-[2px_2px_0px_#dc2626]">
                       {(idx + 1).toString().padStart(2, "0")}
                     </div>
-                    <span className="font-sakuga-title text-base text-[#1d1a4a]">
+                    <span className="font-sakuga-title text-base text-[#18181b]">
                       {project.title}
                     </span>
                     <span className="sfx-tag text-[9px] mt-2">PRODUCTION READY</span>
                   </div>
                 )}
 
-                <div className="absolute top-3 right-3 bg-[#1d1a4a]/90 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-[10px] font-bold">
+                <div className="absolute top-3 right-3 bg-[#18181b]/90 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg text-[10px] font-bold">
                   SDE ARCHITECTURE
                 </div>
               </div>

@@ -3,7 +3,6 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { Hero } from "@/components/sections/Hero";
 import { About as AboutSection } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
-import { SakugaStation } from "@/components/sections/SakugaStation";
 import { Projects } from "@/components/sections/Projects";
 import { Experience as ExperienceSection } from "@/components/sections/Experience";
 import { Education as EducationSection } from "@/components/sections/Education";
@@ -41,9 +40,9 @@ export default async function PortfolioPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#ffffff] text-[#1d1a4a]">
+    <div className="flex flex-col min-h-screen bg-[#ffffff] text-[#18181b]">
       {/* Top Navigation */}
-      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b-2 border-[#1d1a4a]/10">
+      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b-2 border-[#18181b]/10">
         <Sidebar about={serializedAbout} />
       </div>
 
@@ -52,7 +51,6 @@ export default async function PortfolioPage() {
         <Hero about={serializedAbout} skills={serializedSkills} />
         <AboutSection about={serializedAbout} />
         <Skills skills={serializedSkills} />
-        <SakugaStation />
         <Projects projects={serializedProjects} />
         <ExperienceSection experiences={serializedExperiences} />
         <EducationSection educations={serializedEducations} />

@@ -5,7 +5,7 @@ import { SakugaClientScripts } from "@/components/sakuga/SakugaClientScripts";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sakarsa.com";
 
 export const viewport: Viewport = {
-  themeColor: "#1d1a4a",
+  themeColor: "#dc2626",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
@@ -76,9 +76,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/logo.png", type: "image/png" },
     ],
     apple: [
-      { url: "/profile.jpg", sizes: "180x180" },
+      { url: "/apple-touch-icon.png", sizes: "180x180" },
     ],
     shortcut: "/favicon.svg",
   },
@@ -141,6 +142,8 @@ export default function RootLayout({
     <html lang="en" style={{ scrollBehavior: "smooth" }}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -158,7 +161,7 @@ export default function RootLayout({
         <script src="/sakuga-vfx/toast.js" defer></script>
         <script src="/sakuga-vfx/tooltip.js" defer></script>
       </head>
-      <body className="antialiased selection:bg-[#ff5fa8] selection:text-white min-h-screen">
+      <body className="antialiased selection:bg-[#dc2626] selection:text-white min-h-screen">
         <SakugaClientScripts />
         {children}
       </body>

@@ -60,38 +60,38 @@ export function Skills({ skills = [] }: { skills?: any[] }) {
   const getCategoryIcon = (cat: string) => {
     switch (cat.toLowerCase()) {
       case "frontend":
-        return <Code className="w-4 h-4 text-[#ff5fa8]" />;
+        return <Code className="w-4 h-4 text-[#dc2626]" />;
       case "backend":
-        return <Terminal className="w-4 h-4 text-[#8f8df7]" />;
+        return <Terminal className="w-4 h-4 text-[#ef4444]" />;
       case "database":
-        return <Database className="w-4 h-4 text-[#1d1a4a]" />;
+        return <Database className="w-4 h-4 text-[#18181b]" />;
       case "devops":
-        return <Cloud className="w-4 h-4 text-[#ff5fa8]" />;
+        return <Cloud className="w-4 h-4 text-[#dc2626]" />;
       case "ai":
-        return <Sparkles className="w-4 h-4 text-[#ff5fa8]" />;
+        return <Sparkles className="w-4 h-4 text-[#dc2626]" />;
       default:
-        return <Wrench className="w-4 h-4 text-[#8580b0]" />;
+        return <Wrench className="w-4 h-4 text-[#71717a]" />;
     }
   };
 
   return (
-    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#1d1a4a]/10">
+    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#18181b]/10">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="sfx-tag text-[10px]">ARSENAL</span>
-            <span className="text-xs font-bold text-[#8580b0]">CHAPTER 03</span>
+            <span className="text-xs font-bold text-[#71717a]">CHAPTER 03</span>
           </div>
-          <h2 className="font-sakuga-title text-3xl sm:text-4xl text-[#1d1a4a]">
+          <h2 className="font-sakuga-title text-3xl sm:text-4xl text-[#18181b]">
             Core Technologies &amp; Arsenal
           </h2>
-          <p className="text-sm text-[#8580b0] max-w-xl mt-2">
+          <p className="text-sm text-[#71717a] max-w-xl mt-2">
             Battle-tested frameworks, cloud infrastructure, and AI engineering libraries deployed across real-world systems.
           </p>
         </div>
 
-        <div className="text-xs font-bold text-[#8580b0]">
+        <div className="text-xs font-bold text-[#71717a]">
           {filteredSkills.length} SKILLS LOADED
         </div>
       </div>
@@ -104,8 +104,8 @@ export function Skills({ skills = [] }: { skills?: any[] }) {
             onClick={() => setSelectedCategory(cat)}
             className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
               selectedCategory === cat
-                ? "bg-[#1d1a4a] text-white shadow-[3px_3px_0px_#ff5fa8] -translate-y-0.5"
-                : "bg-[#f4f3fc] text-[#1d1a4a] border border-[#dcdaf0] hover:border-[#1d1a4a]"
+                ? "bg-[#18181b] text-white shadow-[3px_3px_0px_#dc2626] -translate-y-0.5"
+                : "bg-[#fff1f2] text-[#18181b] border border-[#fee2e2] hover:border-[#18181b]"
             }`}
           >
             {cat !== "ALL" && getCategoryIcon(cat)}
@@ -122,30 +122,30 @@ export function Skills({ skills = [] }: { skills?: any[] }) {
           return (
             <div
               key={skill.id || skill.name || idx}
-              className="manga-card p-4 bg-white flex flex-col justify-between hover:border-[#1d1a4a] group relative"
+              className="manga-card p-4 bg-white flex flex-col justify-between hover:border-[#18181b] group relative"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#f4f3fc] border border-[#dcdaf0] flex items-center justify-center text-[#1d1a4a] group-hover:border-[#ff5fa8] group-hover:text-[#ff5fa8] transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-[#fff1f2] border border-[#fee2e2] flex items-center justify-center text-[#18181b] group-hover:border-[#dc2626] group-hover:text-[#dc2626] transition-colors">
                     {IconComp ? (
                       <IconComp className="w-4 h-4" />
                     ) : (
                       <Terminal className="w-4 h-4" />
                     )}
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#8580b0]">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#71717a]">
                     {skill.category}
                   </span>
                 </div>
 
-                <h3 className="font-sakuga-title text-sm text-[#1d1a4a] group-hover:text-[#ff5fa8] transition-colors line-clamp-1">
+                <h3 className="font-sakuga-title text-sm text-[#18181b] group-hover:text-[#dc2626] transition-colors line-clamp-1">
                   {skill.name}
                 </h3>
               </div>
 
-              <div className="mt-3 pt-2 border-t border-[#f4f3fc] flex items-center justify-between text-[11px] text-[#8580b0]">
+              <div className="mt-3 pt-2 border-t border-[#fff1f2] flex items-center justify-between text-[11px] text-[#71717a]">
                 <span>{skill.level || "Proficient"}</span>
-                <span className="text-[10px] font-mono text-[#ff5fa8] opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="text-[10px] font-mono text-[#dc2626] opacity-0 group-hover:opacity-100 transition-opacity">
                   ★
                 </span>
               </div>

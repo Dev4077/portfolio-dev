@@ -18,8 +18,8 @@ class Spring {
 
 // ───────── the palette ─────────
 // P is for the effects; the CSS variables below are for the controls.
-const P = { fill: '#ffffff', shade: '#b8b3ff', line: '#5a4fd8', accent: '#ff5fa8', ink: '#1d1a4a', sfx: ['#1d1a4a', '#ffffff'] };
-const VARS = '--sk-card:#fff;--sk-ink:#1d1a4a;--sk-dim:#8580b0;--sk-soft:#b8b3ff;--sk-pri:#8f8df7;--sk-pri-ink:#1d1a4a;--sk-acc:#ff5fa8;--sk-track:#c9cbe0;--sk-r:15px;--sk-bw:3.2px;--sk-sh:6px 7px 0 var(--sk-soft);--sk-btn-sh:var(--sk-sh);--sk-btn-line:var(--sk-ink);--sk-alt-sh:var(--sk-sh);--sk-alt-line:var(--sk-ink);--sk-tick:var(--sk-ink);--sk-fill:var(--sk-acc);--sk-on-pri:#fff;';
+const P = { fill: '#ffffff', shade: '#fca5a5', line: '#b91c1c', accent: '#ef4444', ink: '#18181b', sfx: ['#18181b', '#ffffff'] };
+const VARS = '--sk-card:#fff;--sk-ink:#18181b;--sk-dim:#71717a;--sk-soft:#fca5a5;--sk-pri:#dc2626;--sk-pri-ink:#18181b;--sk-acc:#ef4444;--sk-track:#fecdd3;--sk-r:15px;--sk-bw:3.2px;--sk-sh:6px 7px 0 var(--sk-soft);--sk-btn-sh:var(--sk-sh);--sk-btn-line:var(--sk-ink);--sk-alt-sh:var(--sk-sh);--sk-alt-line:var(--sk-ink);--sk-tick:var(--sk-ink);--sk-fill:var(--sk-acc);--sk-on-pri:#fff;';
 // :where() keeps these at no specificity, so a page's own :root { --sk-acc: ... } wins.
 const pageCss = `:where(:root){${VARS}}
 canvas.sakuga-fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483000}`;
@@ -212,7 +212,7 @@ function sfx(name, x, y, { size = 64, rot = -0.14, life = 0.95, col, edge, dots 
   });
 }
 // two lettering styles: hollow (white with an ink edge) and dotted (screentone letters)
-const hollow = () => ({ col: '#ffffff', edge: '#1d1a4a' }), dotted = () => ({ dots: true, edge: '#1d1a4a' });
+const hollow = () => ({ col: '#ffffff', edge: '#18181b' }), dotted = () => ({ dots: true, edge: '#18181b' });
 
 // ───────── for components ─────────
 const at = (el, fx = 0.5, fy = 0.5) => { const b = el.getBoundingClientRect(); return { x: b.left + scrollX + b.width * fx, y: b.top + scrollY + b.height * fy, w: b.width, h: b.height }; };

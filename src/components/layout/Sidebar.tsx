@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { SakugaButton, SakugaToggle } from "@/components/sakuga";
@@ -9,81 +11,109 @@ import { SakugaButton, SakugaToggle } from "@/components/sakuga";
 export function Sidebar({ about }: { about?: any }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [vfxMode, setVfxMode] = useState(true);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   const navItems = [
-    { href: "#about", label: "About" },
-    { href: "#skills", label: "Skills" },
-    { href: "#vfx-station", label: "VFX Lab ⚡" },
-    { href: "#projects", label: "Selected Work" },
-    { href: "#experience", label: "Experience" },
-    { href: "#education", label: "Education" },
-    { href: "#contact", label: "Contact" },
+    { href: isHome ? "#about" : "/#about", label: "About" },
+    { href: isHome ? "#skills" : "/#skills", label: "Skills" },
+    { href: isHome ? "#projects" : "/#projects", label: "Selected Work" },
+    { href: isHome ? "#experience" : "/#experience", label: "Experience" },
+    { href: isHome ? "#education" : "/#education", label: "Education" },
+    { href: isHome ? "#contact" : "/#contact", label: "Contact" },
+    { href: "/interactive-lab", label: "Interactive Lab ⚡", isLab: true },
   ];
 
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const id = href.replace("#", "");
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: { href: string; isLab?: boolean }) => {
+    if (item.isLab || !isHome) {
+      // Allow standard Next.js navigation
       setIsMobileMenuOpen(false);
+      return;
+    }
+
+    if (item.href.startsWith("#")) {
+      e.preventDefault();
+      const id = item.href.replace("#", "");
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        setIsMobileMenuOpen(false);
+      }
     }
   };
 
   return (
     <>
       <header className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-        {/* Logo: Clean "Dev." with comic sound effect tag - No "D" box, No "Sakuga Edition" subtitle */}
-        <Link href="/" className="flex items-center gap-1 group whitespace-nowrap shrink-0">
-          <span className="font-sakuga-title text-2xl sm:text-3xl text-[#1d1a4a] leading-none tracking-tight">
-            Dev<span className="text-[#ff5fa8]">.</span>
+        {/* Brand / Logo: Real "D" logo with clean "Dev." typography */}
+        <Link href="/" className="flex items-center gap-2.5 group whitespace-nowrap shrink-0">
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 transition-transform group-hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt="Dev Sakarsawala Logo"
+              width={40}
+              height={40}
+              className="object-contain w-full h-full drop-shadow-[0_2px_4px_rgba(220,38,38,0.25)]"
+              priority
+            />
+          </div>
+          <span className="font-sakuga-title text-2xl sm:text-3xl text-[#18181b] leading-none tracking-tight">
+            Dev<span className="text-[#dc2626]">.</span>
           </span>
-          <span className="sfx-tag ml-1.5 text-[9px]">カチッ</span>
+          <span className="sfx-tag ml-0.5 text-[9px] bg-[#dc2626]">カチッ</span>
         </Link>
 
         {/* Desktop Nav: Inline items, no wordbreak */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-2 whitespace-nowrap overflow-x-auto no-scrollbar">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
-              onClick={(e) => scrollTo(e, item.href)}
-              className="px-3 py-1.5 rounded-full text-[13.5px] font-bold text-[#1d1a4a] hover:bg-[#f4f3fc] hover:text-[#ff5fa8] transition-all whitespace-nowrap"
+              onClick={(e) => handleNavClick(e, item)}
+              className={`px-3 py-1.5 rounded-full text-[13.5px] font-bold transition-all whitespace-nowrap ${
+                item.isLab
+                  ? "bg-[#fff1f2] text-[#dc2626] border border-[#fecdd3] hover:bg-[#ffe4e6] hover:border-[#dc2626]"
+                  : "text-[#18181b] hover:bg-[#fff1f2] hover:text-[#dc2626]"
+              }`}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         {/* Header Right Actions: VFX toggle with label displayed BELOW (no hover tooltip) */}
         <div className="hidden sm:flex items-center gap-3 shrink-0">
-          <div className="flex flex-col items-center justify-center pr-3 border-r border-[#dcdaf0] leading-none">
+          <div className="flex flex-col items-center justify-center pr-3 border-r border-[#fee2e2] leading-none">
             <div className="scale-65 -my-2.5 origin-center">
               <SakugaToggle
-                label="Sakuga VFX Mode"
+                label="Anime VFX Mode"
                 checked={vfxMode}
                 onChange={(val) => setVfxMode(val)}
               />
             </div>
-            <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#8580b0] mt-0.5 whitespace-nowrap">
+            <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#71717a] mt-0.5 whitespace-nowrap">
               VFX {vfxMode ? "ON" : "OFF"}
             </span>
           </div>
 
-          <a href="#contact" onClick={(e) => scrollTo(e, "#contact")} className="whitespace-nowrap">
+          <Link
+            href={isHome ? "#contact" : "/#contact"}
+            onClick={(e) => handleNavClick(e, { href: isHome ? "#contact" : "/#contact" })}
+            className="whitespace-nowrap"
+          >
             <SakugaButton variant="secondary">
               Let&apos;s Talk 💬
             </SakugaButton>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden text-[#1d1a4a] p-2 rounded-xl border-2 border-[#1d1a4a] bg-[#f4f3fc] shadow-[2px_2px_0px_#1d1a4a] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
+          className="lg:hidden text-[#18181b] p-2 rounded-xl border-2 border-[#18181b] bg-[#fff1f2] shadow-[2px_2px_0px_#18181b] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
           aria-label="Toggle navigation menu"
         >
-          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {isMobileMenuOpen ? <X className="h-5 w-5 text-[#dc2626]" /> : <Menu className="h-5 w-5" />}
         </button>
       </header>
 
@@ -95,22 +125,24 @@ export function Sidebar({ about }: { about?: any }) {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="lg:hidden bg-white border-b-2 border-[#1d1a4a] px-6 py-6 overflow-hidden"
+            className="lg:hidden bg-white border-b-2 border-[#18181b] px-6 py-6 overflow-hidden"
           >
             <nav className="flex flex-col space-y-3">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => scrollTo(e, item.href)}
-                  className="font-sakuga-title text-lg text-[#1d1a4a] hover:text-[#ff5fa8] py-1 border-b border-[#f4f3fc] flex items-center justify-between"
+                  onClick={(e) => handleNavClick(e, item)}
+                  className={`font-sakuga-title text-lg py-1 border-b border-[#fff1f2] flex items-center justify-between ${
+                    item.isLab ? "text-[#dc2626]" : "text-[#18181b] hover:text-[#dc2626]"
+                  }`}
                 >
                   <span>{item.label}</span>
-                  <span className="text-xs font-sans font-bold text-[#8580b0]">&rarr;</span>
-                </a>
+                  <span className="text-xs font-sans font-bold text-[#71717a]">&rarr;</span>
+                </Link>
               ))}
               <div className="pt-4 flex items-center justify-between">
-                <span className="text-sm font-bold text-[#8580b0]">VFX Mode:</span>
+                <span className="text-sm font-bold text-[#71717a]">VFX Mode:</span>
                 <div className="scale-75 origin-right">
                   <SakugaToggle label="Mobile VFX Mode" checked={vfxMode} onChange={setVfxMode} />
                 </div>

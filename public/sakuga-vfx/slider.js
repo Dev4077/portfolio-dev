@@ -49,7 +49,7 @@ class SakugaSlider extends fx.Base {
     r.addEventListener('input', () => this.sync());
     r.addEventListener('change', () => {
       const c = at(this.th), dir = Math.sign(this.peak) || 1;
-      if (Math.abs(this.peak) > 1.3) { slash(c.x + dir * 34, c.y, { len: 150, ang: dir > 0 ? 0 : Math.PI, thick: 12, life: 0.5, col: '#b8b3ff' }); burst(c.x + dir * 4, c.y, { r: 24, spikes: 11, life: 0.28 }); shards(c.x + dir * 10, c.y, { n: 4, size: 4, dir: dir > 0 ? 0 : Math.PI, arc: 2.4 }); ticks(c.x + dir * 52, c.y - 30, { dir: dir > 0 ? -0.6 : -2.5, n: 3, r: 4, len: 10 });
+      if (Math.abs(this.peak) > 1.3) { slash(c.x + dir * 34, c.y, { len: 150, ang: dir > 0 ? 0 : Math.PI, thick: 12, life: 0.5, col: '#fca5a5' }); burst(c.x + dir * 4, c.y, { r: 24, spikes: 11, life: 0.28 }); shards(c.x + dir * 10, c.y, { n: 4, size: 4, dir: dir > 0 ? 0 : Math.PI, arc: 2.4 }); ticks(c.x + dir * 52, c.y - 30, { dir: dir > 0 ? -0.6 : -2.5, n: 3, r: 4, len: 10 });
         later(520, () => { puff(c.x - dir * 60, c.y - 34, { size: 11, n: 4, vy: -10, life: 0.8 }); puff(c.x - dir * 22, c.y - 22, { size: 6, n: 3, vy: -8, life: 0.6 }); wob(c.x - dir * 82, c.y - 34, { dir: -1, r: 9 }); }); }
       if (this.frac() >= 1 || this.frac() <= 0) shards(c.x, c.y, { n: 5, dir: dir > 0 ? Math.PI : 0, arc: 2 });
       this.peak = 0; this.dispatchEvent(new Event('change', { bubbles: true }));
@@ -64,7 +64,7 @@ class SakugaSlider extends fx.Base {
       this.acc += dt * Math.abs(v) * 20; const c = at(this.th), dir = Math.sign(v), big = Math.min(1, Math.abs(v) / 2.4);
       while (this.acc > 1) { this.acc -= 1; puff(c.x - dir * rnd(14, 30), c.y - rnd(2, 12) - big * 8, { size: rnd(6, 9) + big * 9, n: 4, vx: -dir * rnd(26, 70), vy: -rnd(22, 58) * (0.5 + big), life: rnd(0.7, 1.15) });
         lines(c.x - dir * 16, c.y + rnd(-4, 12), { n: 1, dir: dir > 0 ? Math.PI : 0, len: 50 + big * 50, spread: 2, life: 0.24 }); if (Math.random() < 0.3) shards(c.x - dir * 20, c.y + 6, { n: 1, size: 3.5, speed: 120, dir: dir > 0 ? Math.PI + 0.5 : -0.5, arc: 1 }); }
-      if (Math.abs(v) > 1.5 && this.t - this.said > 1.1) { this.said = this.t; sfx('shu', c.x - dir * 6, c.y - 78, { size: 104, life: 0.75, rot: -0.16, col: '#5a4fd8', edge: '#ffffff' }); }
+      if (Math.abs(v) > 1.5 && this.t - this.said > 1.1) { this.said = this.t; sfx('shu', c.x - dir * 6, c.y - 78, { size: 104, life: 0.75, rot: -0.16, col: '#b91c1c', edge: '#ffffff' }); }
     }
   }
 }
@@ -92,8 +92,8 @@ class Spring {
 
 // ───────── the palette ─────────
 // P is for the effects; the CSS variables below are for the controls.
-const P = { fill: '#ffffff', shade: '#b8b3ff', line: '#5a4fd8', accent: '#ff5fa8', ink: '#1d1a4a', sfx: ['#1d1a4a', '#ffffff'] };
-const VARS = '--sk-card:#fff;--sk-ink:#1d1a4a;--sk-dim:#8580b0;--sk-soft:#b8b3ff;--sk-pri:#8f8df7;--sk-pri-ink:#1d1a4a;--sk-acc:#ff5fa8;--sk-track:#c9cbe0;--sk-r:15px;--sk-bw:3.2px;--sk-sh:6px 7px 0 var(--sk-soft);--sk-btn-sh:var(--sk-sh);--sk-btn-line:var(--sk-ink);--sk-alt-sh:var(--sk-sh);--sk-alt-line:var(--sk-ink);--sk-tick:var(--sk-ink);--sk-fill:var(--sk-acc);--sk-on-pri:#fff;';
+const P = { fill: '#ffffff', shade: '#fca5a5', line: '#b91c1c', accent: '#ef4444', ink: '#18181b', sfx: ['#18181b', '#ffffff'] };
+const VARS = '--sk-card:#fff;--sk-ink:#18181b;--sk-dim:#71717a;--sk-soft:#fca5a5;--sk-pri:#dc2626;--sk-pri-ink:#18181b;--sk-acc:#ef4444;--sk-track:#fecdd3;--sk-r:15px;--sk-bw:3.2px;--sk-sh:6px 7px 0 var(--sk-soft);--sk-btn-sh:var(--sk-sh);--sk-btn-line:var(--sk-ink);--sk-alt-sh:var(--sk-sh);--sk-alt-line:var(--sk-ink);--sk-tick:var(--sk-ink);--sk-fill:var(--sk-acc);--sk-on-pri:#fff;';
 // :where() keeps these at no specificity, so a page's own :root { --sk-acc: ... } wins.
 const pageCss = `:where(:root){${VARS}}
 canvas.sakuga-fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483000}`;
@@ -286,7 +286,7 @@ function sfx(name, x, y, { size = 64, rot = -0.14, life = 0.95, col, edge, dots 
   });
 }
 // two lettering styles: hollow (white with an ink edge) and dotted (screentone letters)
-const hollow = () => ({ col: '#ffffff', edge: '#1d1a4a' }), dotted = () => ({ dots: true, edge: '#1d1a4a' });
+const hollow = () => ({ col: '#ffffff', edge: '#18181b' }), dotted = () => ({ dots: true, edge: '#18181b' });
 
 // ───────── for components ─────────
 const at = (el, fx = 0.5, fy = 0.5) => { const b = el.getBoundingClientRect(); return { x: b.left + scrollX + b.width * fx, y: b.top + scrollY + b.height * fy, w: b.width, h: b.height }; };

@@ -5,44 +5,44 @@
 
 :root {
   --page: #ffffff;
-  --text: #1d1a4a;
-  --mute: #8580b0;
-  --line: #dcdaf0;
-  --chip: #f4f3fc;
+  --text: #18181b;
+  --mute: #71717a;
+  --line: #fee2e2;
+  --chip: #fff1f2;
   --card: #ffffff;
 
-  /* Sakuga core variables */
+  /* Anime VFX core variables - Red Edition */
   --sk-card: #ffffff;
-  --sk-ink: #1d1a4a;
-  --sk-dim: #8580b0;
-  --sk-soft: #b8b3ff;
-  --sk-pri: #8f8df7;
-  --sk-pri-ink: #1d1a4a;
-  --sk-acc: #ff5fa8;
-  --sk-track: #c9cbe0;
+  --sk-ink: #18181b;
+  --sk-dim: #71717a;
+  --sk-soft: #fca5a5;
+  --sk-pri: #dc2626;
+  --sk-pri-ink: #18181b;
+  --sk-acc: #ef4444;
+  --sk-track: #fecdd3;
   --sk-r: 16px;
   --sk-bw: 2.5px;
-  --sk-sh: 4px 4px 0px #1d1a4a;
-  --sk-btn-sh: 4px 4px 0px #1d1a4a;
-  --sk-btn-line: #1d1a4a;
-  --sk-alt-sh: 3px 3px 0px #dcdaf0;
-  --sk-alt-line: #1d1a4a;
-  --sk-tick: #1d1a4a;
-  --sk-fill: #ff5fa8;
+  --sk-sh: 4px 4px 0px #18181b;
+  --sk-btn-sh: 4px 4px 0px #18181b;
+  --sk-btn-line: #18181b;
+  --sk-alt-sh: 3px 3px 0px #fee2e2;
+  --sk-alt-line: #18181b;
+  --sk-tick: #18181b;
+  --sk-fill: #dc2626;
   --sk-on-pri: #ffffff;
 
   /* Theme mappings for Tailwind */
   --background: 0 0% 100%;
-  --foreground: 243 48% 20%; /* #1d1a4a */
-  --muted: 245 60% 97%; /* #f4f3fc */
-  --muted-foreground: 246 25% 60%; /* #8580b0 */
-  --accent: 333 100% 69%; /* #ff5fa8 */
+  --foreground: 240 10% 4%; /* #18181b */
+  --muted: 350 100% 98%;    /* #fff1f2 */
+  --muted-foreground: 240 4% 46%; /* #71717a */
+  --accent: 351 95% 71%;    /* #f43f5e */
   --accent-foreground: 0 0% 100%;
-  --primary: 241 84% 76%; /* #8f8df7 */
-  --primary-foreground: 243 48% 20%;
-  --border: 244 50% 90%; /* #dcdaf0 */
-  --input: 244 50% 90%;
-  --ring: 333 100% 69%;
+  --primary: 0 72% 51%;     /* #dc2626 */
+  --primary-foreground: 0 0% 100%;
+  --border: 0 86% 97%;      /* #fee2e2 */
+  --input: 0 86% 97%;
+  --ring: 0 72% 51%;
   --radius: 18px;
 
   --app-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -73,7 +73,7 @@
   }
 
   ::selection {
-    background: #ff5fa8;
+    background: #dc2626;
     color: #ffffff;
   }
 
@@ -83,7 +83,7 @@
   }
 }
 
-/* Manga / Comic / Sakuga VFX Styles */
+/* Manga / Comic / VFX Styles */
 .font-sakuga-title {
   font-family: var(--app-font-display);
   font-weight: 900;
@@ -137,23 +137,25 @@
   transform: translateY(-1px);
 }
 
-.manga-badge-pink {
-  background: #ffe4f1;
-  border-color: #ffb3d7;
-  color: #c71569;
+.manga-badge-pink,
+.manga-badge-red {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #b91c1c;
 }
 
-.manga-badge-pink:hover {
-  border-color: #ff5fa8;
+.manga-badge-pink:hover,
+.manga-badge-red:hover {
+  border-color: #dc2626;
 }
 
 .screentone-bg {
-  background-image: radial-gradient(circle, #dcdaf0 1.2px, transparent 1.2px);
+  background-image: radial-gradient(circle, #fecdd3 1.2px, transparent 1.2px);
   background-size: 16px 16px;
 }
 
 .screentone-soft {
-  background-image: radial-gradient(circle, #ebe9fb 1.5px, transparent 1.5px);
+  background-image: radial-gradient(circle, #ffe4e6 1.5px, transparent 1.5px);
   background-size: 20px 20px;
 }
 
@@ -161,12 +163,13 @@
   box-shadow: 4px 4px 0px var(--text);
 }
 
-.manga-shadow-pink {
-  box-shadow: 4px 4px 0px #ff5fa8;
+.manga-shadow-pink,
+.manga-shadow-red {
+  box-shadow: 4px 4px 0px #dc2626;
 }
 
 .manga-shadow-soft {
-  box-shadow: 4px 4px 0px #dcdaf0;
+  box-shadow: 4px 4px 0px #fee2e2;
 }
 
 /* Sound effect comic badge */
@@ -176,7 +179,7 @@
   font-weight: 900;
   display: inline-block;
   padding: 2px 8px;
-  background: var(--text);
+  background: #dc2626;
   color: #ffffff;
   border-radius: 6px;
   font-size: 11px;

@@ -37,23 +37,23 @@ export function Education({ educations = [] }: { educations?: any[] }) {
   const allEdu = educations && educations.length > 0 ? educations : DEFAULT_EDUCATIONS;
 
   return (
-    <section id="education" className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#1d1a4a]/10">
+    <section id="education" className="py-20 px-4 sm:px-6 lg:px-8 border-b-2 border-[#18181b]/10">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="sfx-tag text-[10px]">FOUNDATIONS</span>
-            <span className="text-xs font-bold text-[#8580b0]">CHAPTER 06</span>
+            <span className="text-xs font-bold text-[#71717a]">CHAPTER 06</span>
           </div>
-          <h2 className="font-sakuga-title text-3xl sm:text-4xl text-[#1d1a4a]">
+          <h2 className="font-sakuga-title text-3xl sm:text-4xl text-[#18181b]">
             Academic Foundation &amp; Training
           </h2>
-          <p className="text-sm text-[#8580b0] max-w-xl mt-2">
+          <p className="text-sm text-[#71717a] max-w-xl mt-2">
             Computer science fundamentals, software engineering coursework, and technical rigor.
           </p>
         </div>
 
-        <div className="text-xs font-bold text-[#8580b0]">
+        <div className="text-xs font-bold text-[#71717a]">
           ACADEMIC DOSSIER
         </div>
       </div>
@@ -62,11 +62,11 @@ export function Education({ educations = [] }: { educations?: any[] }) {
         {allEdu.map((edu, idx) => (
           <div
             key={edu.id || edu._id || idx}
-            className="manga-card p-6 sm:p-8 bg-white flex flex-col justify-between hover:border-[#1d1a4a]"
+            className="manga-card p-6 sm:p-8 bg-white flex flex-col justify-between hover:border-[#18181b]"
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="font-mono text-xs font-bold bg-[#1d1a4a] text-white px-3 py-1 rounded-full">
+                <span className="font-mono text-xs font-bold bg-[#18181b] text-white px-3 py-1 rounded-full">
                   {formatDateRange(edu.startDate, edu.endDate, edu.current)}
                 </span>
                 {edu.grade && (
@@ -76,28 +76,28 @@ export function Education({ educations = [] }: { educations?: any[] }) {
                 )}
               </div>
 
-              <h3 className="font-sakuga-title text-xl sm:text-2xl text-[#1d1a4a] mb-1">
+              <h3 className="font-sakuga-title text-xl sm:text-2xl text-[#18181b] mb-1">
                 {edu.degree}
               </h3>
 
-              <div className="text-sm font-bold text-[#ff5fa8] mb-4 flex items-center gap-1.5">
+              <div className="text-sm font-bold text-[#dc2626] mb-4 flex items-center gap-1.5">
                 <GraduationCap className="w-4 h-4" />
                 <span>{edu.institution}</span>
               </div>
 
               {edu.description && (
-                <p className="text-xs sm:text-sm text-[#8580b0] leading-relaxed mb-4">
+                <p className="text-xs sm:text-sm text-[#71717a] leading-relaxed mb-4">
                   {edu.description}
                 </p>
               )}
             </div>
 
             {edu.achievements && edu.achievements.length > 0 && (
-              <div className="pt-3 border-t border-[#dcdaf0] flex flex-wrap gap-2">
+              <div className="pt-3 border-t border-[#fee2e2] flex flex-wrap gap-2">
                 {edu.achievements.map((ach: string, aIdx: number) => (
                   <span
                     key={aIdx}
-                    className="px-2.5 py-1 rounded-md bg-[#f4f3fc] border border-[#dcdaf0] text-xs font-bold text-[#1d1a4a]"
+                    className="px-2.5 py-1 rounded-md bg-[#fff1f2] border border-[#fee2e2] text-xs font-bold text-[#18181b]"
                   >
                     ✓ {ach}
                   </span>
