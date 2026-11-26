@@ -23,6 +23,7 @@ class SakugaProgress extends fx.Base {
     .bar i::after { left: 37px; width: 6px; }
     .pct { display: table; margin: 64px auto 0; padding: 3px 13px 4px; border: 2.5px solid var(--sk-ink); background: var(--sk-card); box-shadow: 5px 5px 0 var(--sk-fill); transform: skewX(-12deg); font: italic 900 21px/1.1 "Marker Felt", "Chalkboard SE", "Comic Sans MS", -apple-system, "Segoe UI", sans-serif; letter-spacing: -.01em; white-space: nowrap; will-change: transform; }`;
   get value() { return this.goal; }
+  set value(n) { if (typeof this.set === 'function') this.set(n); else this.setAttribute('value', n); }
   get done() { return !!this.doneAt; }
   attributeChangedCallback(name, _, v) { if (!this.box) return; if (name === 'value') this.set(v === null ? 0 : +v); else this.box.setAttribute('aria-label', v || 'Loading'); }
   render() { return `<div class="prog" role="progressbar" part="progress" aria-label="${esc(this.getAttribute('label') || 'Loading')}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" part="bar"><i></i></div><span class="pct" part="label">0%</span></div>`; }

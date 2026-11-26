@@ -21,6 +21,7 @@ class SakugaTabs extends fx.Base {
   get selected() { return this.tabs ? this.tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true') : +(this.getAttribute('selected') || 0); }
   set selected(i) { if (this.tabs) this.go(+i, true); else this.setAttribute('selected', i); }
   get value() { const t = this.tabs?.[this.selected]; return t ? t.dataset.value : ''; }
+  set value(v) { if (this.tabs) { const i = this.tabs.findIndex(t => t.dataset.value === v); if (i >= 0) this.go(i, true); } }
   attributeChangedCallback(_, __, v) { if (this.tabs && +v !== this.selected) this.go(+v || 0, true); }
   render() {
     const opts = [...this.querySelectorAll('option')].map((o, i) => ({ v: o.value || String(i), t: o.textContent.trim() }));

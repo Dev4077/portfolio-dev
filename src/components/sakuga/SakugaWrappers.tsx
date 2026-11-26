@@ -360,7 +360,6 @@ export const SakugaProgress = forwardRef<SakugaProgressElement, SakugaProgressPr
       <sakuga-progress
         ref={elRef}
         label={label}
-        value={value}
         done-label={doneLabel}
         demo={demo}
         className={className}

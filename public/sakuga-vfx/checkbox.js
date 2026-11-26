@@ -24,6 +24,7 @@ class SakugaCheckbox extends fx.Base {
   get disabled() { return this.hasAttribute('disabled'); }
   set disabled(v) { this.toggleAttribute('disabled', !!v); }
   get value() { return this.getAttribute('value') || 'on'; }
+  set value(v) { this.setAttribute('value', v); }
   attributeChangedCallback(name) { if (!this.inp) return; if (name === 'checked') this.checked = this.hasAttribute('checked'); else this.inp.disabled = this.disabled; }
   form() { this.internals.setFormValue(this.checked ? this.value : null); }
   render() { return `<label part="label"><input type="checkbox"${this.hasAttribute('checked') ? ' checked' : ''}${this.disabled ? ' disabled' : ''}><span class="box" part="box"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 10.5l4.5 4.5 8.5-10"/></svg></span><slot></slot></label>`; }
