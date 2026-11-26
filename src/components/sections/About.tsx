@@ -100,10 +100,11 @@ export function About({ about }: { about?: any }) {
             </h4>
 
             <div className="flex flex-wrap gap-2">
-              <span className="manga-badge text-xs bg-white">MERN Architecture</span>
+              <span className="manga-badge text-xs bg-white">Full Stack Architecture</span>
+              <span className="manga-badge text-xs bg-white">AI Agent Workflows</span>
+              <span className="manga-badge text-xs bg-white">MCP Workflows</span>
+              <span className="manga-badge text-xs bg-white">Redis</span>
               <span className="manga-badge text-xs bg-white">LangGraph Workflows</span>
-              <span className="manga-badge text-xs bg-white">Next.js App Router</span>
-              <span className="manga-badge text-xs bg-white">Redis Query Caching</span>
               <span className="manga-badge text-xs bg-white">Docker &amp; Microservices</span>
             </div>
           </div>

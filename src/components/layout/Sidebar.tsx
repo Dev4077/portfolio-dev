@@ -21,11 +21,10 @@ export function Sidebar({ about }: { about?: any }) {
     { href: isHome ? "#experience" : "/#experience", label: "Experience" },
     { href: isHome ? "#education" : "/#education", label: "Education" },
     { href: isHome ? "#contact" : "/#contact", label: "Contact" },
-    { href: "/interactive-lab", label: "Interactive Lab ⚡", isLab: true },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: { href: string; isLab?: boolean }) => {
-    if (item.isLab || !isHome) {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: { href: string }) => {
+    if (!isHome) {
       // Allow standard Next.js navigation
       setIsMobileMenuOpen(false);
       return;
@@ -70,11 +69,7 @@ export function Sidebar({ about }: { about?: any }) {
               key={item.href}
               href={item.href}
               onClick={(e) => handleNavClick(e, item)}
-              className={`px-3 py-1.5 rounded-full text-[13.5px] font-bold transition-all whitespace-nowrap ${
-                item.isLab
-                  ? "bg-[#fff1f2] text-[#dc2626] border border-[#fecdd3] hover:bg-[#ffe4e6] hover:border-[#dc2626]"
-                  : "text-[#18181b] hover:bg-[#fff1f2] hover:text-[#dc2626]"
-              }`}
+              className="px-3 py-1.5 rounded-full text-[13.5px] font-bold text-[#18181b] hover:bg-[#fff1f2] hover:text-[#dc2626] transition-all whitespace-nowrap"
             >
               {item.label}
             </Link>
@@ -133,9 +128,7 @@ export function Sidebar({ about }: { about?: any }) {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item)}
-                  className={`font-sakuga-title text-lg py-1 border-b border-[#fff1f2] flex items-center justify-between ${
-                    item.isLab ? "text-[#dc2626]" : "text-[#18181b] hover:text-[#dc2626]"
-                  }`}
+                  className="font-sakuga-title text-lg py-1 border-b border-[#fff1f2] flex items-center justify-between text-[#18181b] hover:text-[#dc2626]"
                 >
                   <span>{item.label}</span>
                   <span className="text-xs font-sans font-bold text-[#71717a]">&rarr;</span>

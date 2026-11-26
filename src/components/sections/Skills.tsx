@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import * as SiIcons from "react-icons/si";
 import { Terminal, Cpu, Database, Cloud, Code, Wrench, Sparkles, CheckCircle2 } from "lucide-react";
-import { SakugaTabs, SakugaTooltip } from "@/components/sakuga";
+import { SakugaButton, SakugaTabs, SakugaTooltip } from "@/components/sakuga";
 
 const DEFAULT_SKILLS = [
   // Frontend
@@ -91,8 +92,12 @@ export function Skills({ skills = [] }: { skills?: any[] }) {
           </p>
         </div>
 
-        <div className="text-xs font-bold text-[#71717a]">
-          {filteredSkills.length} SKILLS LOADED
+        <div className="flex items-center gap-3">
+          <Link href="/interactive-lab">
+            <SakugaButton variant="primary">
+              Interactive Lab ⚡
+            </SakugaButton>
+          </Link>
         </div>
       </div>
 
@@ -152,6 +157,27 @@ export function Skills({ skills = [] }: { skills?: any[] }) {
             </div>
           );
         })}
+      </div>
+
+      {/* Interactive Lab Callout in Skills */}
+      <div className="mt-8 manga-card p-5 bg-[#fff1f2] border-2 border-[#18181b] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[4px_4px_0px_#18181b]">
+        <div className="flex items-center gap-3 text-center sm:text-left">
+          <span className="sfx-tag text-[10px] bg-[#dc2626]">INTERACTIVE</span>
+          <div>
+            <h4 className="font-sakuga-title text-base text-[#18181b]">
+              Dynamic Anime UI Physics &amp; VFX Controls
+            </h4>
+            <p className="text-xs text-[#71717a] mt-0.5">
+              Experience all 12 keyframe controls with real-time springs, spark bursts, and sound effects.
+            </p>
+          </div>
+        </div>
+
+        <Link href="/interactive-lab" className="shrink-0">
+          <SakugaButton variant="secondary">
+            Explore Interactive Lab ⚡
+          </SakugaButton>
+        </Link>
       </div>
     </section>
   );
